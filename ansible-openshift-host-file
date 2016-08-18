@@ -1,0 +1,60 @@
+# Create an OSEv3 group that contains the master, nodes, etcd, and lb groups.
+# The lb group lets Ansible configure HAProxy as the load balancing solution.
+# Comment lb out if your load balancer is pre-configured.
+[OSEv3:children]
+masters
+etcd
+nodes
+nfs
+
+# Set variables common for all OSEv3 hosts
+[OSEv3:vars]
+ansible_ssh_user=root
+deployment_type=openshift-enterprise
+use_cluster_metrics=true
+openshift_release=v3.2.0.20
+
+openshift_master_cluster_method=native
+openshift_master_cluster_hostname=master1.example.com
+openshift_master_cluster_public_hostname=master1.poc.company.com
+
+# Configure metricsPublicURL in the master config for cluster metrics
+# See: https://docs.openshift.com/enterprise/latest/install_config/cluster_metrics.html
+openshift_master_metrics_public_url=https://metrics.cloudapps.poc.company.com/hawkular/metrics
+
+# Configure loggingPublicURL in the master config for aggregate logging
+# See: https://docs.openshift.com/enterprise/latest/install_config/aggregate_logging.html
+openshift_master_logging_public_url=https://kibana.cloudapps.poc.company.com
+# Enable cluster metrics
+
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename':'/etc/origin/openshift-passwd'}]
+
+# default project node selector
+osm_default_node_selector='region=primary'
+openshift_hosted_router_selector='region=infra'
+openshift_hosted_router_replicas=1
+#openshift_hosted_router_certificate={"certfile": "/path/to/router.crt", "keyfile": "/path/to/router.key", "cafile": "/path/to/router-ca.crt"}
+openshift_hosted_registry_selector='region=infra'
+openshift_hosted_registry_replicas=1
+
+openshift_master_default_subdomain=cloudapps.poc.company.com
+
+[nfs]
+nfsserver.example.com
+
+# host group for masters
+[masters]
+master1.example.com
+
+# host group for etcd
+[etcd]
+master1.example.com
+
+# host group for nodes, includes region info.  Add or remove the required nodes. 
+[nodes]
+master1.example.com openshift_public_hostname="master1.poc.company.com" openshift_hostname="master1.example.com"
+infranode1.example.com openshift_hostname="infranode1.example.com" openshift_node_labels="{'region': 'infra', 'zone': 'default', 'env': 'infra'}"
+node1.example.com openshift_hostname="node1.example.com" openshift_node_labels="{'region': 'primary', 'zone': 'one', 'env': 'dev'}"
+node2.example.com openshift_hostname="node2.example.com" openshift_node_labels="{'region': 'primary', 'zone': 'two', 'env': 'dev'}"
+node3.example.com openshift_hostname="node3.example.com" openshift_node_labels="{'region': 'primary', 'zone': 'three', 'env': 'prod'}"
+
