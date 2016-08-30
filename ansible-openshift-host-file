@@ -15,16 +15,16 @@ use_cluster_metrics=true
 openshift_release=v3.2.0.20
 
 openshift_master_cluster_method=native
-openshift_master_cluster_hostname=master1.example.com
-openshift_master_cluster_public_hostname=master1.poc.company.com
+openshift_master_cluster_hostname=master1.company.com
+openshift_master_cluster_public_hostname=master1.pub.company.com
 
 # Configure metricsPublicURL in the master config for cluster metrics
 # See: https://docs.openshift.com/enterprise/latest/install_config/cluster_metrics.html
-openshift_master_metrics_public_url=https://metrics.cloudapps.poc.company.com/hawkular/metrics
+openshift_master_metrics_public_url=https://metrics.cloudapps.pub.company.com/hawkular/metrics
 
 # Configure loggingPublicURL in the master config for aggregate logging
 # See: https://docs.openshift.com/enterprise/latest/install_config/aggregate_logging.html
-openshift_master_logging_public_url=https://kibana.cloudapps.poc.company.com
+openshift_master_logging_public_url=https://kibana.cloudapps.pub.company.com
 # Enable cluster metrics
 
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename':'/etc/origin/openshift-passwd'}]
@@ -37,24 +37,24 @@ openshift_hosted_router_replicas=1
 openshift_hosted_registry_selector='region=infra'
 openshift_hosted_registry_replicas=1
 
-openshift_master_default_subdomain=cloudapps.poc.company.com
+openshift_master_default_subdomain=cloudapps.pub.company.com
 
 [nfs]
-nfsserver.example.com
+nfsserver.company.com
 
 # host group for masters
 [masters]
-master1.example.com
+master1.company.com
 
 # host group for etcd
 [etcd]
-master1.example.com
+master1.company.com
 
 # host group for nodes, includes region info.  Add or remove the required nodes. 
 [nodes]
-master1.example.com openshift_public_hostname="master1.poc.company.com" openshift_hostname="master1.example.com"
-infranode1.example.com openshift_hostname="infranode1.example.com" openshift_node_labels="{'region': 'infra', 'zone': 'default', 'env': 'infra'}"
-node1.example.com openshift_hostname="node1.example.com" openshift_node_labels="{'region': 'primary', 'zone': 'one', 'env': 'dev'}"
-node2.example.com openshift_hostname="node2.example.com" openshift_node_labels="{'region': 'primary', 'zone': 'two', 'env': 'dev'}"
-node3.example.com openshift_hostname="node3.example.com" openshift_node_labels="{'region': 'primary', 'zone': 'three', 'env': 'prod'}"
+master1.company.com openshift_public_hostname="master1.pub.company.com" openshift_hostname="master1.company.com"
+infranode1.company.com openshift_hostname="infranode1.company.com" openshift_node_labels="{'region': 'infra', 'zone': 'default', 'env': 'infra'}"
+node1.company.com openshift_hostname="node1.company.com" openshift_node_labels="{'region': 'primary', 'zone': 'one', 'env': 'dev'}"
+node2.company.com openshift_hostname="node2.company.com" openshift_node_labels="{'region': 'primary', 'zone': 'two', 'env': 'dev'}"
+node3.company.com openshift_hostname="node3.company.com" openshift_node_labels="{'region': 'primary', 'zone': 'three', 'env': 'prod'}"
 
