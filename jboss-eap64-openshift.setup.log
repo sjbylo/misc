@@ -1,0 +1,73 @@
+
+[root@x18tclddkr2a eap-openshift]# oc create sa eap-service-account
+serviceaccount "eap-service-account" created
+[root@x18tclddkr2a eap-openshift]# oc get sa
+NAME                  SECRETS   AGE
+builder               2         15d
+default               2         15d
+deployer              2         15d
+eap-service-account   2         4s
+
+[root@x18tclddkr2a eap-openshift]# oc policy add-role-to-user view system:serviceaccount:$(oc project -q):eap-service-account
+[root@x18tclddkr2a eap-openshift]# echo oc policy add-role-to-user view system:serviceaccount:$(oc project -q):eap-service-account
+oc policy add-role-to-user view system:serviceaccount:ibgt-ipe:eap-service-account
+[root@x18tclddkr2a eap-openshift]# oc project -q
+ibgt-ipe
+[root@x18tclddkr2a eap-openshift]#
+
+
+
+[root@x18tclddkr2a eap-openshift]# oc get secret
+NAME                                  TYPE                                  DATA      AGE
+builder-dockercfg-aza38               kubernetes.io/dockercfg               1         15d
+builder-token-28jo4                   kubernetes.io/service-account-token   3         15d
+builder-token-ath2i                   kubernetes.io/service-account-token   3         15d
+default-dockercfg-dtby1               kubernetes.io/dockercfg               1         15d
+default-token-swxuq                   kubernetes.io/service-account-token   3         15d
+default-token-u1n3p                   kubernetes.io/service-account-token   3         15d
+deployer-dockercfg-lal1z              kubernetes.io/dockercfg               1         15d
+deployer-token-bgtg8                  kubernetes.io/service-account-token   3         15d
+deployer-token-xgj1x                  kubernetes.io/service-account-token   3         15d
+eap-service-account-dockercfg-wsjxm   kubernetes.io/dockercfg               1         5m
+eap-service-account-token-qc2dy       kubernetes.io/service-account-token   3         5m
+eap-service-account-token-tk8r1       kubernetes.io/service-account-token   3         5m
+[root@x18tclddkr2a eap-openshift]# #oc secret new
+[root@x18tclddkr2a eap-openshift]# pwd
+/ipe/eap-openshift
+[root@x18tclddkr2a eap-openshift]# oc get bc
+NAME       TYPE      FROM      LATEST
+ipe-vasg   Docker    Binary    0
+[root@x18tclddkr2a eap-openshift]# oc secret new ipe-vasg-secret
+modules/           standalone/        x01sparsapp1a.jks
+[root@x18tclddkr2a eap-openshift]# oc secret new ipe-vasg-secret x01sparsapp1a.jks
+secret/ipe-vasg-secret
+[root@x18tclddkr2a eap-openshift]#
+[root@x18tclddkr2a eap-openshift]# oc secrets add serviceaccount/eap-service-account secret/ipe-vasg-secret
+[root@x18tclddkr2a eap-openshift]#
+
+root@x18tclddkr2a eap-openshift]# oc new-build --name=ipe-vasg --image-stream=jboss-eap64-openshift-imagestream-tags
+--> Found tag :eap in image stream "jboss-eap64-openshift" in project "openshift" for "jboss-eap64-o
+
+    * A Docker build using binary input will be created
+      * The resulting image will be pushed to image stream "ipe-vasg:latest"
+
+--> Creating resources with label build=ipe-vasg ...
+    error: imagestreams "ipe-vasg" already exists
+    buildconfig "ipe-vasg" created
+[root@x18tclddkr2a eap-openshift]# oc start-build ipe-vasg --from-dir=. --follow                    Uploading "." at commit "HEAD" as binary input for the build ...
+Uploading directory "." as binary input for the build ...
+Error from server: imagestreamtags "jboss-eap64-openshift:eap" not found
+[root@x18tclddkr2a eap-openshift]# 
+
+
+[root@x18tclddkr2a eap-openshift]# oc new-build --name=ipe-vasg --image-stream=jboss-eap64-openshift --binary=true --allow-missing-imagestream-tags oss-eap64-openshift --binary=true --allow-missing-ima                                                                   --> Found tag :latest in image stream "jboss-eap64-openshift" in project "openshift" for "jboss-eap64-openshift"
+
+    * A Docker build using binary input will be created
+      * The resulting image will be pushed to image stream "ipe-vasg:latest"
+
+--> Creating resources with label build=ipe-vasg ...
+    imagestream "ipe-vasg" created
+    buildconfig "ipe-vasg" created
+--> Success
+[root@x18tclddkr2a eap-openshift]#
+
