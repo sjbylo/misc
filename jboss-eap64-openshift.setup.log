@@ -47,7 +47,7 @@ secret/ipe-vasg-secret
 [root@x18tclddkr2a eap-openshift]# oc secrets add serviceaccount/eap-service-account secret/ipe-vasg-secret
 [root@x18tclddkr2a eap-openshift]#
 
-[root@x18tclddkr2a eap-openshift]# oc new-build --name=ipe-vasg --image-stream=jboss-eap64-openshift --binary=true --allow-missing-imagestream-tags oss-eap64-openshift --binary=true --allow-missing-imagestream-tags
+[root@x18tclddkr2a eap-openshift]# oc new-build --name=ipe-vasg --image-stream=jboss-eap64-openshift --binary=true --allow-missing-imagestream-tags
 --> Found tag :latest in image stream "jboss-eap64-openshift" in project "openshift" for "jboss-eap64-openshift"
 
     * A Docker build using binary input will be created
