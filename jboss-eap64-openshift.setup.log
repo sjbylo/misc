@@ -1,6 +1,37 @@
 # Using the docs:
 # https://access.redhat.com/documentation/en/red-hat-xpaas/version-0/red-hat-xpaas-eap-image/#getting_started
 
+[root@x18tclddkr2a ipe]# oc get is -n openshift
+NAME                                  DOCKER REPO                                                                    TAGS                      UPDATED
+fis-java-openshift                    registry.access.redhat.com/jboss-fuse-6/fis-java-openshift   
+fis-karaf-openshift                   registry.access.redhat.com/jboss-fuse-6/fis-karaf-openshift  
+jboss-amq-62                          registry.access.redhat.com/jboss-amq-6/amq62-openshift       
+jboss-datagrid65-openshift            registry.access.redhat.com/jboss-datagrid-6/datagrid65-openshift
+jboss-decisionserver62-openshift      registry.access.redhat.com/jboss-decisionserver-6/decisionserver62-openshift
+jboss-eap64-openshift                 registry.access.redhat.com/jboss-eap-6/eap64-openshift       
+jboss-eap70-openshift                 registry.access.redhat.com/jboss-eap-7/eap70-openshift       
+jboss-webserver30-tomcat7-openshift   registry.access.redhat.com/jboss-webserver-3/webserver30-tomcat7-openshift
+jboss-webserver30-tomcat8-openshift   registry.access.redhat.com/jboss-webserver-3/webserver30-tomcat8-openshift
+jenkins                               172.30.6.239:5000/openshift/jenkins                                            1
+mariadb                               172.30.6.239:5000/openshift/mariadb                                            10.1
+mongodb                               172.30.6.239:5000/openshift/mongodb                                            2.4,2.6,3.2
+mysql                                 172.30.6.239:5000/openshift/mysql                                              5.5,5.6
+nodejs                                172.30.6.239:5000/openshift/nodejs                                             0.10,4
+perl                                  172.30.6.239:5000/openshift/perl                                               5.16,5.20
+php                                   172.30.6.239:5000/openshift/php                                                5.5,5.6                   13 days ago
+postgresql                            172.30.6.239:5000/openshift/postgresql                                         9.2,9.4,9.5
+python                                172.30.6.239:5000/openshift/python                                             2.7,3.3,3.4 + 1 more...
+redhat-sso70-openshift                172.30.6.239:5000/openshift/redhat-sso70-openshift                             1.3-TP
+ruby                                  172.30.6.239:5000/openshift/ruby                                               2.3,2.0,2.2
+[root@x18tclddkr2a ipe]# oc get istag -n openshift
+NAME      DOCKER REF                                                                                                UPDATED       IMAGENAME
+php:5.5   172.30.6.239:5000/openshift/php@sha256:3a2f443d167bab5ea57e76de6821d18b7777f55d242ea565f1294b9a13a0d44d   13 days ago   sha256:3a2f443d167bab5ea57e76de6821d18b7777f55d242ea565f1294b9a13a0d44d
+[root@x18tclddkr2a ipe]#
+
+
+
+
+
 [root@x18tclddkr2a eap-openshift]# oc create sa eap-service-account
 serviceaccount "eap-service-account" created
 [root@x18tclddkr2a eap-openshift]# oc get sa
