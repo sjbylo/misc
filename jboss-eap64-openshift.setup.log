@@ -45,22 +45,8 @@ secret/ipe-vasg-secret
 [root@x18tclddkr2a eap-openshift]# oc secrets add serviceaccount/eap-service-account secret/ipe-vasg-secret
 [root@x18tclddkr2a eap-openshift]#
 
-root@x18tclddkr2a eap-openshift]# oc new-build --name=ipe-vasg --image-stream=jboss-eap64-openshift-imagestream-tags
---> Found tag :eap in image stream "jboss-eap64-openshift" in project "openshift" for "jboss-eap64-o
-
-    * A Docker build using binary input will be created
-      * The resulting image will be pushed to image stream "ipe-vasg:latest"
-
---> Creating resources with label build=ipe-vasg ...
-    error: imagestreams "ipe-vasg" already exists
-    buildconfig "ipe-vasg" created
-[root@x18tclddkr2a eap-openshift]# oc start-build ipe-vasg --from-dir=. --follow                    Uploading "." at commit "HEAD" as binary input for the build ...
-Uploading directory "." as binary input for the build ...
-Error from server: imagestreamtags "jboss-eap64-openshift:eap" not found
-[root@x18tclddkr2a eap-openshift]# 
-
-
-[root@x18tclddkr2a eap-openshift]# oc new-build --name=ipe-vasg --image-stream=jboss-eap64-openshift --binary=true --allow-missing-imagestream-tags oss-eap64-openshift --binary=true --allow-missing-ima                                                                   --> Found tag :latest in image stream "jboss-eap64-openshift" in project "openshift" for "jboss-eap64-openshift"
+[root@x18tclddkr2a eap-openshift]# oc new-build --name=ipe-vasg --image-stream=jboss-eap64-openshift --binary=true --allow-missing-imagestream-tags oss-eap64-openshift --binary=true --allow-missing-imagestream-tags
+--> Found tag :latest in image stream "jboss-eap64-openshift" in project "openshift" for "jboss-eap64-openshift"
 
     * A Docker build using binary input will be created
       * The resulting image will be pushed to image stream "ipe-vasg:latest"
@@ -70,4 +56,24 @@ Error from server: imagestreamtags "jboss-eap64-openshift:eap" not found
     buildconfig "ipe-vasg" created
 --> Success
 [root@x18tclddkr2a eap-openshift]#
+
+[root@x18tclddkr2a eap-openshift]# oc start-build ipe-vasg --from-dir=. --follow                
+Uploading "." at commit "HEAD" as binary input for the build ...
+Uploading directory "." as binary input for the build ...
+Error from server: imagestreamtags "jboss-eap64-openshift:eap" not found
+[root@x18tclddkr2a eap-openshift]# 
+
+
+
+OTHER commands:
+
+root@x18tclddkr2a eap-openshift]# oc new-build --name=ipe-vasg --image-stream=jboss-eap64-openshift-imagestream-tags
+--> Found tag :eap in image stream "jboss-eap64-openshift" in project "openshift" for "jboss-eap64-o
+
+    * A Docker build using binary input will be created
+      * The resulting image will be pushed to image stream "ipe-vasg:latest"
+
+--> Creating resources with label build=ipe-vasg ...
+    error: imagestreams "ipe-vasg" already exists
+    buildconfig "ipe-vasg" created
 
