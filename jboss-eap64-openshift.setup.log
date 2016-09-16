@@ -1,7 +1,7 @@
 # Using the docs:
 # https://access.redhat.com/documentation/en/red-hat-xpaas/version-0/red-hat-xpaas-eap-image/#getting_started
 
-[root@x18tclddkr2a ipe]# oc get is -n openshift
+[root@x18tclddkr2a ipe]# oc get is -n openshift   # Notice the tags are missing for the xPaaS img streams 
 NAME                                  DOCKER REPO                                                                    TAGS                      UPDATED
 fis-java-openshift                    registry.access.redhat.com/jboss-fuse-6/fis-java-openshift   
 fis-karaf-openshift                   registry.access.redhat.com/jboss-fuse-6/fis-karaf-openshift  
@@ -28,9 +28,7 @@ NAME      DOCKER REF                                                            
 php:5.5   172.30.6.239:5000/openshift/php@sha256:3a2f443d167bab5ea57e76de6821d18b7777f55d242ea565f1294b9a13a0d44d   13 days ago   sha256:3a2f443d167bab5ea57e76de6821d18b7777f55d242ea565f1294b9a13a0d44d
 [root@x18tclddkr2a ipe]#
 
-
-
-
+# Following the steps in EAP documentation 
 
 [root@x18tclddkr2a eap-openshift]# oc create sa eap-service-account
 serviceaccount "eap-service-account" created
@@ -42,12 +40,12 @@ deployer              2         15d
 eap-service-account   2         4s
 
 [root@x18tclddkr2a eap-openshift]# oc policy add-role-to-user view system:serviceaccount:$(oc project -q):eap-service-account
+
 [root@x18tclddkr2a eap-openshift]# echo oc policy add-role-to-user view system:serviceaccount:$(oc project -q):eap-service-account
 oc policy add-role-to-user view system:serviceaccount:ibgt-ipe:eap-service-account
+
 [root@x18tclddkr2a eap-openshift]# oc project -q
 ibgt-ipe
-[root@x18tclddkr2a eap-openshift]#
-
 
 
 [root@x18tclddkr2a eap-openshift]# oc get secret
@@ -67,16 +65,20 @@ eap-service-account-token-tk8r1       kubernetes.io/service-account-token   3   
 [root@x18tclddkr2a eap-openshift]# #oc secret new
 [root@x18tclddkr2a eap-openshift]# pwd
 /ipe/eap-openshift
+
 [root@x18tclddkr2a eap-openshift]# oc get bc
 NAME       TYPE      FROM      LATEST
 ipe-vasg   Docker    Binary    0
+
 [root@x18tclddkr2a eap-openshift]# oc secret new ipe-vasg-secret
 modules/           standalone/        x01sparsapp1a.jks
+
 [root@x18tclddkr2a eap-openshift]# oc secret new ipe-vasg-secret x01sparsapp1a.jks
 secret/ipe-vasg-secret
-[root@x18tclddkr2a eap-openshift]#
+
 [root@x18tclddkr2a eap-openshift]# oc secrets add serviceaccount/eap-service-account secret/ipe-vasg-secret
-[root@x18tclddkr2a eap-openshift]#
+
+# Create a binary build config 
 
 [root@x18tclddkr2a eap-openshift]# oc new-build --name=ipe-vasg --image-stream=jboss-eap64-openshift --binary=true --allow-missing-imagestream-tags
 --> Found tag :latest in image stream "jboss-eap64-openshift" in project "openshift" for "jboss-eap64-openshift"
@@ -88,14 +90,14 @@ secret/ipe-vasg-secret
     imagestream "ipe-vasg" created
     buildconfig "ipe-vasg" created
 --> Success
-[root@x18tclddkr2a eap-openshift]#
+
+# Start the build 
 
 [root@x18tclddkr2a eap-openshift]# oc start-build ipe-vasg --from-dir=. --follow                
 Uploading "." at commit "HEAD" as binary input for the build ...
 Uploading directory "." as binary input for the build ...
 Error from server: imagestreamtags "jboss-eap64-openshift:eap" not found
 [root@x18tclddkr2a eap-openshift]# 
-
 
 
 OTHER commands:
@@ -111,7 +113,8 @@ root@x18tclddkr2a eap-openshift]# oc new-build --name=ipe-vasg --image-stream=jb
     buildconfig "ipe-vasg" created
 
 
-# Docker pull error 
+# We see an EAP image in their "UAT" registry and want to try and pull it and push it into OCP.... 
+# But we see a Docker pull error (tag missing?) 
 
 [root@x18tclddkr2a ipe]# docker pull x18scldrepo2a.cld.uat.dbs.com:5000/jboss-eap-6/eap64-openshift Using default tag: latest
 Trying to pull repository x18scldrepo2a.cld.uat.dbs.com:5000/jboss-eap-6/eap64-openshift ... latest: Pulling from jboss-eap-6/eap64-openshift
