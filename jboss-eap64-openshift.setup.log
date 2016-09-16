@@ -110,3 +110,18 @@ root@x18tclddkr2a eap-openshift]# oc new-build --name=ipe-vasg --image-stream=jb
     error: imagestreams "ipe-vasg" already exists
     buildconfig "ipe-vasg" created
 
+
+# Docker pull error 
+
+[root@x18tclddkr2a ipe]# docker pull x18scldrepo2a.cld.uat.dbs.com:5000/jboss-eap-6/eap64-openshift Using default tag: latest
+Trying to pull repository x18scldrepo2a.cld.uat.dbs.com:5000/jboss-eap-6/eap64-openshift ... latest: Pulling from jboss-eap-6/eap64-openshift
+ 
+f780b4676575: Download complete
+c0cbeb76fae2: Download complete
+5af97c8b7253: Download complete
+83aba161914a: Download complete
+c44c17fedec0: Download complete
+not found
+Error: image jboss-eap-6/eap64-openshift:latest not found
+[root@x18tclddkr2a ipe]#
+
