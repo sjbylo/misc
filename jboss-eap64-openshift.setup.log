@@ -1,3 +1,5 @@
+# Using the docs:
+# https://access.redhat.com/documentation/en/red-hat-xpaas/version-0/red-hat-xpaas-eap-image/#getting_started
 
 [root@x18tclddkr2a eap-openshift]# oc create sa eap-service-account
 serviceaccount "eap-service-account" created
