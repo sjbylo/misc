@@ -6,5 +6,4 @@ EXPOSE 8080
 
 USER 1001
 
-CMD while true; do read -t 10 line; sleep 1; done
-
+CMD i=0; while [ $i -lt 20 ]; do read -t 60 line; echo -n $i; let i=$i+1; done
