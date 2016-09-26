@@ -18,3 +18,7 @@ oc policy add-role-to-user edit system:serviceaccount:cicd:default -n cicd
 oc policy add-role-to-user edit system:serviceaccount:cicd:default -n dev
 oc policy add-role-to-user edit system:serviceaccount:cicd:default -n stage
 
+oc project cicd
+oc status
+
+
