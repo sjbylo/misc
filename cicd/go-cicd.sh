@@ -3,6 +3,8 @@
 # sync this folder to the VM first
 # rsync -r -v cicd vagrant@10.1.2.2:
 
+oc login -u openshift-dev -p devel
+
 if [ ! -d "openshift-cd-demo" ] 
 then
 	git clone https://github.com/OpenShiftDemos/openshift-cd-demo.git
