@@ -9,7 +9,7 @@ if [ ! -d "openshift-cd-demo" ]
 then
 	git clone https://github.com/OpenShiftDemos/openshift-cd-demo.git
 else
-	cd openshift-cd-demo && git pull origin master && cd ..
+	cd openshift-cd-demo && git pull && cd ..
 fi
 
 oc new-project cicd --display-name="CI/CD"
