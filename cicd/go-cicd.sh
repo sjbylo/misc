@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash -xe
 
 # sync this folder to the VM first
 # rsync -r -v cicd vagrant@10.1.2.2:
