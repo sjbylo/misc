@@ -1,4 +1,5 @@
 #!/bin/bash -xe
+# Script to set up Siamak's CICD Demo https://github.com/OpenShiftDemos/openshift-cd-demo.git
 
 # sync this folder to the VM first
 # rsync -r -v cicd vagrant@10.1.2.2:
