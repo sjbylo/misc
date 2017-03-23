@@ -1,0 +1,59 @@
+# Create an OSEv3 group that contains the master, nodes, etcd, and lb groups.
+[OSEv3:children]
+masters
+etcd
+nodes
+
+# Set variables common for all OSEv3 hosts
+[OSEv3:vars]
+ansible_user=ec2-user
+ansible_ssh_user=ec2-user
+ansible_become=true
+deployment_type=openshift-enterprise
+debug_level=4
+
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
+
+# Add dev/dev and admin/admin users.  Run "oadm policy add-cluster-role-to-user cluster-admin admin" after installation to make admin the cluster admin.
+openshift_master_htpasswd_users={'dev': '$apr1$TKxRh8Qu$c0aoGoyvc0BSH0cZVzpcc.', 'admin': '$apr1$mUmmVISC$2JNTQ/Tx2mV4FWGUYMG.8/'}
+
+osm_default_node_selector='env=dev'
+
+openshift_hosted_metrics_deploy=true
+
+# default subdomain to use for exposed routes 
+openshift_master_default_subdomain=apps.192.168.0.18.nip.io
+
+# default project node selector
+osm_default_node_selector='env=dev'
+
+# Router selector (optional)
+#openshift_hosted_router_selector='env=dev'
+openshift_hosted_router_replicas=1
+
+# Registry selector (optional)
+#openshift_registry_selector='env=dev'
+
+# Configure metricsPublicURL in the master config for cluster metrics
+openshift_master_metrics_public_url=https://hawkular-metrics.192.168.0.18.nip.io
+
+# Configure loggingPublicURL in the master config for aggregate logging
+#openshift_master_logging_public_url=https://kibana.192.168.0.18.nip.io
+
+# host group for masters
+[masters]
+ocp-master.192.168.0.18.nip.io
+# host group for etcd
+[etcd]
+ocp-master.192.168.0.18.nip.io
+
+# host group for nodes, includes region info
+[nodes]
+ocp-master.192.168.0.18.nip.io openshift_node_labels="{'name': 'master', 'region': 'singapore', 'region': 'infra', 'zone': 'east'}"
+ocp-node1.192.168.0.19.nip.io  openshift_node_labels="{'name': 'node1',  'region': 'singapore',                    'zone': 'east', 'env': 'dev'}"
+ocp-node2.192.168.0.23.nip.io  openshift_node_labels="{'name': 'node2',  'region': 'singapore',                    'zone': 'west', 'env': 'dev'}"
+
+#ocp-master.192.168.0.18.nip.io openshift_node_labels="{'name': 'master', 'region': 'singapore', 'region': 'infra', 'zone': 'east'}" openshift_public_hostname="ocp-master.192.168.0.18.nip.io" 
+#infra.192.168.0.18.nip.io      openshift_node_labels="{'name': 'infra', 'region': 'infra',                             'zone': 'east'}"
+
+
