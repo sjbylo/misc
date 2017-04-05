@@ -2,7 +2,7 @@
 
 appdemo will install the ruby hello world app with the correct route and with health checks 
 
-hpa-appdemo will install with hpa on the frontend
+hpa-appdemo will install appdemo but with hpa on the frontend
 
 ab-load-tester will install ab which can apply load on the frontend
 
