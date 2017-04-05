@@ -16,3 +16,6 @@ cat hpa-appdemo.template.yaml     | oc create -f -  -n openshift
 
 cat ab-load-tester.template.yaml  | oc create -f -  -n openshift
 
+## Other
+
+Note, it may take a while to pull the images on first run
