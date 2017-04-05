@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Template
+metadata:
+  annotations:
+    description: Run a simple HTTP test using Apache Bench
+  name: ab-load-tester
+objects:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    name: ${TEST_NAME}
+  spec:
+    containers:
+    - name: ${TEST_NAME}
+      image: edseymour/ab
+      env:
+        - name: REQUESTS
+          value: ${REQUESTS}
+        - name: URL
+          value: ${URL}
+        - name: CONCURRENCY
+          value: ${CONCURRENCY}
+        - name: VERBOSITY
+          value: ${VERBOSITY}
+        - name: TIMELIMIT
+          value: ${TIMELIMIT}
+        - name: TIMEOUT
+          value: ${TIMEOUT}  
+    restartPolicy: Never
+parameters:
+- name: TEST_NAME
+  value: 'ab-load-test'
+- name: URL
+  value: 'http://frontend:8080/'
+  required: true
+- name: REQUESTS
+  value: '1000000'
+- name: CONCURRENCY
+  value: '20'
+- name: VERBOSITY
+  value: ''
+- name: TIMELIMIT
+  value: ''
+- name: TIMEOUT
+  value: ''
