@@ -9,7 +9,7 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
-      app: ruby-helloworld-sample
+      app: ruby-helloworld-sample-hpa
       template: application-template-stibuild
     name: frontend
   spec:
@@ -31,7 +31,7 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
-      app: ruby-helloworld-sample
+      app: ruby-helloworld-sample-hpa
       template: application-template-stibuild
     name: dbsecret
   type: Opaque
@@ -41,7 +41,7 @@ objects:
     creationTimestamp: null
     generation: 1
     labels:
-      app: ruby-helloworld-sample
+      app: ruby-helloworld-sample-hpa
       template: application-template-stibuild
     name: origin-ruby-sample
   spec:
@@ -63,7 +63,7 @@ objects:
     creationTimestamp: null
     generation: 2
     labels:
-      app: ruby-helloworld-sample
+      app: ruby-helloworld-sample-hpa
       template: application-template-stibuild
     name: ruby-22-centos7
   spec:
@@ -83,7 +83,7 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
-      app: ruby-helloworld-sample
+      app: ruby-helloworld-sample-hpa
       name: ruby-sample-build
       template: application-template-stibuild
     name: ruby-sample-build
@@ -132,7 +132,7 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
-      app: ruby-helloworld-sample
+      app: ruby-helloworld-sample-hpa
       template: application-template-stibuild
     name: database
   spec:
@@ -154,7 +154,7 @@ objects:
       service.alpha.openshift.io/dependencies: '[{"name":"database","namespace":"","kind":"Service"}]'
     creationTimestamp: null
     labels:
-      app: ruby-helloworld-sample
+      app: ruby-helloworld-sample-hpa
       template: application-template-stibuild
     name: frontend
   spec:
@@ -175,7 +175,7 @@ objects:
     creationTimestamp: null
     generation: 1
     labels:
-      app: ruby-helloworld-sample
+      app: ruby-helloworld-sample-hpa
       template: application-template-stibuild
     name: database
   spec:
@@ -295,7 +295,7 @@ objects:
     creationTimestamp: null
     generation: 1
     labels:
-      app: ruby-helloworld-sample
+      app: ruby-helloworld-sample-hpa
       template: application-template-stibuild
     name: frontend
   spec:
@@ -405,7 +405,7 @@ objects:
       openshift.io/host.generated: "true"
     creationTimestamp: null
     labels:
-      app: ruby-helloworld-sample
+      app: ruby-helloworld-sample-hpa
       template: application-template-stibuild
     name: frontend
   spec:
