@@ -1,0 +1,12 @@
+nd: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+  name: slow
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: standard
+  zone: ap-southeast-1a
+  iopsPerGB: "10" 
+#  encrypted: true 
+#  kmsKeyId: keyvalue 
+
