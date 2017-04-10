@@ -16,6 +16,13 @@ cat hpa-appdemo.template.yaml     | oc create -f - --as system:admin -n openshif
 
 cat ab-load-tester.template.yaml  | oc create -f - --as system:admin -n openshift
 
+## HPA demo
+
+Launch the hpa app demo template then then launch the ab-load-tester template.  Ensure the "ab" args are something like:
+
+e.g. -n 10000000 -c 20 http://frontend:8080/
+
+
 ## Troubleshooting
 
 Note, it may take a while to pull the images on first run
