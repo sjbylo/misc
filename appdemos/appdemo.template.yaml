@@ -83,7 +83,7 @@ objects:
     runPolicy: Serial
     source:
       git:
-        uri: https://github.com/openshift/ruby-hello-world.git
+        uri: ${GIT_URL}
       type: Git
     strategy:
       sourceStrategy:
@@ -419,3 +419,7 @@ parameters:
   name: MYSQL_DATABASE
   required: true
   value: root
+- description: Application code
+  name: GIT_URL
+  required: true
+  value: https://github.com/sjbylo/ruby-hello-world.git
