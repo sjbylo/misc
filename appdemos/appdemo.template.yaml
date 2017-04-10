@@ -1,21 +1,20 @@
 apiVersion: v1
 kind: Template
 metadata:
-  creationTimestamp: null
+  creationTimestamp: 2017-04-07T09:33:12Z
   name: appdemo
+  namespace: openshift
+  resourceVersion: "804"
+  selfLink: /oapi/v1/namespaces/openshift/templates/appdemo
+  uid: 37e79970-1b75-11e7-8171-068c0cb70a55
 objects:
 - apiVersion: v1
-  data:
-    mysql-password: MUVtNml1aXI=
-    mysql-user: dXNlckFRSQ==
   kind: Secret
   metadata:
-    creationTimestamp: null
-    labels:
-      app: ruby-helloworld-sample
-      template: application-template-stibuild
     name: dbsecret
-  type: Opaque
+  stringData:
+    mysql-password: ${MYSQL_PASSWORD}
+    mysql-user: ${MYSQL_USER}
 - apiVersion: v1
   kind: ImageStream
   metadata:
@@ -220,7 +219,7 @@ objects:
                 key: mysql-password
                 name: dbsecret
           - name: MYSQL_DATABASE
-            value: root
+            value: ${MYSQL_DATABASE}
           image: centos/mysql-57-centos7:latest
           imagePullPolicy: Always
           livenessProbe:
@@ -329,7 +328,7 @@ objects:
                 key: mysql-password
                 name: dbsecret
           - name: MYSQL_DATABASE
-            value: root
+            value: ${MYSQL_DATABASE}
           image: origin-ruby-sample:latest
           imagePullPolicy: IfNotPresent
           livenessProbe:
@@ -405,3 +404,18 @@ objects:
         type: Admitted
       routerName: router
       wildcardPolicy: None
+parameters:
+- description: database username
+  from: user[A-Z0-9]{3}
+  generate: expression
+  name: MYSQL_USER
+  required: true
+- description: database password
+  from: '[a-zA-Z0-9]{8}'
+  generate: expression
+  name: MYSQL_PASSWORD
+  required: true
+- description: database name
+  name: MYSQL_DATABASE
+  required: true
+  value: root
