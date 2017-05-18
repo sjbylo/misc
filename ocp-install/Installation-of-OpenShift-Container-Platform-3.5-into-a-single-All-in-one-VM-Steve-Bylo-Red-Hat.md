@@ -37,44 +37,45 @@ Select a domain name (FQDN) you control, e.g. openshift.example.com
 
 The hostname of the VM must be set to "master.<FQDN>" e.g. master.openshift.example.com 
 
-# Set up the following DNS entries 
+## Set up the following DNS entries 
 
 1) Wildcard entry:    *.apps.openshift.example.com              => $IP
 2) A record:          master.openshift.example.com              => $IP
 3) A record:          hawkular-metrics.openshift.example.com    => $IP
 
-# Log into the VM with ssh 
+## Log into the VM with ssh 
 
-# Set the hostname of the VM to master.$MY_FQDN 
+## Set the hostname of the VM to master.$MY_FQDN 
 
-# Ensure the hostname resolves to the IP address of your network interface, using the following command 
+## Ensure the hostname resolves to the IP address of your network interface, using the following command 
 
 host master.$MY_FQDN
 (value of $IP) 
 
-# Example
+## Example
+
 host master.openshift.example.com
 192.168.10.10
 
-# Ensure each command succeeds before running the next command. 
+## Ensure each command succeeds before running the next command. 
 
-# Run all commands as root 
+## Run all commands as root 
 
-# Ensure these variable are set (change to suit your environment!)  
+## Ensure these variable are set (change to suit your environment!)  
 
 IP=ip-address-of-the-interface 
 SSH_USER=your-user
 MY_FQDN=your-FQDN
 MY_DEV=your-device-path
 
-# Example
+## Example
 
 IP=192.168.10.10
 SSH_USER=ec2-user 
 MY_FQDN=mydomain.com
 MY_DEV=/dev/sdb  
 
-# Ensure ssh works inside the VM using the VM's hostname by setting up the ssh keys (see Appendix 2 for help) 
+## Ensure ssh works inside the VM using the VM's hostname by setting up the ssh keys (see Appendix 2 for help) 
 
 ssh $SSH_USER@`hostname` id 
 (should show the output of the "id" command)
@@ -98,10 +99,10 @@ subscription-manager repos \
     --enable="rhel-7-server-ose-3.5-rpms" \
     --enable="rhel-7-fast-datapath-rpms"
 
-# Now, all the above 4 repos should be enabled only. Check with "yum repolist" command 
+## Now, all the above 4 repos should be enabled only. Check with "yum repolist" command 
 
 
-## Install the software
+# Install the software
 
 yum -y install wget git net-tools bind-utils iptables-services bridge-utils bash-completion && \
 yum -y update && \
@@ -117,13 +118,15 @@ yum install docker
 docker version
 (version should be 1.12, if not, something is wrong with the enabled repos) 
 
-# Configure docker by adding the option "--insecure-registry 172.30.0.0\/16" to /etc/sysconfig/docker
-# The following command will do that for you 
+Configure docker by adding the option "--insecure-registry 172.30.0.0\/16" to /etc/sysconfig/docker
+
+The following command will do that for you 
 
 [ -f /tmp/docker.bak ] || ( sudo cp /etc/sysconfig/docker /tmp/docker.bak && \
 sudo sed -i '/^OPTIONS=/s/selinux-enabled -/selinux-enabled --insecure-registry 172.30.0.0\/16 -/' /etc/sysconfig/docker )
 
-# If not already, set this variable to the device of the extra disk (be careful to use the right device, not the root device!) 
+If not already, set this variable to the device of the extra disk (be careful to use the right device, not the root device!) 
+
 MY_DEV=<your device path> 
 
 cat <<EOF > /etc/sysconfig/docker-storage-setup
