@@ -201,34 +201,34 @@ systemctl  enable  NetworkManager
 
 << The Appendix describes how to do this >> 
 
-# Install OpenShift by running ansible install playbook 
+Install OpenShift by running ansible install playbook 
 
 ansible-playbook -e enable_excluders=false /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
 ```
 ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
 ```
 
-# Create the cluster admin for user admin
+Create the cluster admin for user admin
 
 ```
 oadm policy add-cluster-role-to-user cluster-admin admin
 ```
 
-# Set passwords / create new users
+Set passwords / create new users
 
 ```
 htpasswd /etc/origin/openshift-passwd dev
 htpasswd /etc/origin/openshift-passwd admin
 ```
 
-# Verify OpenShift is working
+Verify OpenShift is working
 
 ```
 oc get nodes 
 ```
 (should return the master node, "ready")
 
-# Log into the console at https://master.$MY_FQDN/console/ 
+Log into the console at https://master.$MY_FQDN/console/ 
 
 
 # Appendix I 
@@ -302,7 +302,7 @@ END
 
 # Appendix II
 
-## Copy an existing private key to the VM 
+Copy an existing private key to the VM 
 
 ```
 scp ~/.ssh/id_rsa  $MY_USER@$IP:.ssh/
@@ -314,7 +314,7 @@ ssh ec2-user@localhost id   # should work without a password
 
 # Appendix III
 
-## If there are 2 network interfaces  
+If there are 2 network interfaces  
 
 Note: if the VM has more than one network interface, add the following ansible variable to /etc/ansible/hosts for the master entry (bottom of file) 
 ```
