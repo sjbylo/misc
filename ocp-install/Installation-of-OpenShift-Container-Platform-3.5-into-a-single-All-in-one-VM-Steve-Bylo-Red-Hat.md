@@ -32,20 +32,23 @@ https://docs.openshift.com/container-platform/3.5/install_config/install/advance
 DNS must be configured
 
 Note that setting hostnames in /etc/hosts *will not work*. 
+
 Select a domain name (FQDN) you control, e.g. openshift.example.com 
+
 The hostname of the VM must be set to "master.<FQDN>" e.g. master.openshift.example.com  
+
 
 ## Set up the following DNS entries 
 
-1) Wildcard entry:    *.apps.openshift.example.com              => $IP
-2) A record:          master.openshift.example.com              => $IP
-3) A record:          hawkular-metrics.openshift.example.com    => $IP
+1. Wildcard entry:    *.apps.openshift.example.com              => $IP
+1. A record:          master.openshift.example.com              => $IP
+1. A record:          hawkular-metrics.openshift.example.com    => $IP
 
-## Log into the VM with ssh 
+Log into the VM with ssh 
 
-## Set the hostname of the VM to master.$MY_FQDN 
+Set the hostname of the VM to master.$MY_FQDN 
 
-## Ensure the hostname resolves to the IP address of your network interface, using the following command 
+Ensure the hostname resolves to the IP address of your network interface, using the following command 
 
 ```
 host master.$MY_FQDN
@@ -59,11 +62,11 @@ host master.openshift.example.com
 192.168.10.10
 ```
 
-## Ensure each command succeeds before running the next command. 
+Ensure each command succeeds before running the next command. 
 
-## Run all commands as root 
+Run all commands as root 
 
-## Ensure these variable are set (change to suit your environment!)  
+Ensure these variable are set (change to suit your environment!)  
 
 ```
 IP=ip-address-of-the-interface 
@@ -81,7 +84,7 @@ MY_FQDN=mydomain.com
 MY_DEV=/dev/sdb  
 ```
 
-## Ensure ssh works inside the VM using the VM's hostname by setting up the ssh keys (see Appendix 2 for help) 
+Ensure ssh works inside the VM using the VM's hostname by setting up the ssh keys (see Appendix 2 for help) 
 
 ```
 ssh $SSH_USER@`hostname` id 
