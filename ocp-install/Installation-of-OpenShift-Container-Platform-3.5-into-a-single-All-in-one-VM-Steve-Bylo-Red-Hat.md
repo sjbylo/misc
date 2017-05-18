@@ -129,10 +129,12 @@ If not already, set this variable to the device of the extra disk (be careful to
 
 MY_DEV=<your device path> 
 
+```
 cat <<EOF > /etc/sysconfig/docker-storage-setup
 DEVS=$MY_DEV
 VG=docker-vg
 EOF
+```
 
 docker-storage-setup
 (ensure no errors are shown!   Should see "Logical volume "docker-pool" created")  
