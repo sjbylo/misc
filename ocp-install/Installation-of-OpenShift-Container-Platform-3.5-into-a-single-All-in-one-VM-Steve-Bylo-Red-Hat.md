@@ -18,13 +18,13 @@ https://docs.openshift.com/container-platform/3.5/install_config/install/advance
 # Create a VM with the following
 
 1. RHEL 7.3 
-2. At least 8 GB of RAM, better 16 GB or more
-3. 2 vCPU 
-4. Attach an extra disk for docker storage, e.g. /dev/sdb
-5. One network interface with a static IP  
-6. The VM must have internet access 
-7. A valid subscription of OpenShift, e.g. evaluation subs 
-8. Ensure ssh can be used to log into the VM without a password, and also from the VM itself (needed for ansible) 
+1. At least 8 GB of RAM, better 16 GB or more
+1. 2 vCPU 
+1. Attach an extra disk for docker storage, e.g. /dev/sdb
+1. One network interface with a static IP  
+1. The VM must have internet access 
+1. A valid subscription of OpenShift, e.g. evaluation subs 
+1. Ensure ssh can be used to log into the VM without a password, and also from the VM itself (needed for ansible) 
 
 
 ## Set up DNS entries 
@@ -119,7 +119,7 @@ subscription-manager repos \
     --enable="rhel-7-fast-datapath-rpms"
 ```
 
-## Now, all the above 4 repos should be enabled only. Check with "yum repolist" command 
+Now, all the above 4 repos should be enabled only. Check with "yum repolist" command 
 
 
 # Install the software
