@@ -31,10 +31,8 @@ https://docs.openshift.com/container-platform/3.5/install_config/install/advance
 
 _DNS must be configured_
 
-Note that setting hostnames in /etc/hosts *will not work* 
-
+* Note that setting hostnames in /etc/hosts *will not work* 
 Select a domain name (FQDN) you control, e.g. openshift.example.com 
-
 The hostname of the VM must be set to "master.<FQDN>" e.g. master.openshift.example.com 
 
 ## Set up the following DNS entries 
@@ -49,13 +47,17 @@ The hostname of the VM must be set to "master.<FQDN>" e.g. master.openshift.exam
 
 ## Ensure the hostname resolves to the IP address of your network interface, using the following command 
 
+```
 host master.$MY_FQDN
+```
 (value of $IP) 
 
 ## Example
 
+```
 host master.openshift.example.com
 192.168.10.10
+```
 
 ## Ensure each command succeeds before running the next command. 
 
@@ -63,71 +65,99 @@ host master.openshift.example.com
 
 ## Ensure these variable are set (change to suit your environment!)  
 
+```
 IP=ip-address-of-the-interface 
 SSH_USER=your-user
 MY_FQDN=your-FQDN
 MY_DEV=your-device-path
+```
 
 ## Example
 
+```
 IP=192.168.10.10
 SSH_USER=ec2-user 
 MY_FQDN=mydomain.com
 MY_DEV=/dev/sdb  
+```
 
 ## Ensure ssh works inside the VM using the VM's hostname by setting up the ssh keys (see Appendix 2 for help) 
 
+```
 ssh $SSH_USER@`hostname` id 
 (should show the output of the "id" command)
+```
 
 ## Register the server with Red Hat 
 
+```
 subscription-manager register --username=<user_name> --password=<password>
+```
 
+```
 subscription-manager list --available  > /tmp/list
+```
 (find the 'pool id' in the /tmp/list file for 'OpenShift Container Platform' and use it in the next command)
 
+```
 subscription-manager attach --pool=<pool_id>
+```
 
+```
 subscription-manager repos --disable="*"
+```
 
+```
 yum-config-manager --disable \* 
+```
 
+```
 subscription-manager repos \
     --enable="rhel-7-server-rpms" \
     --enable="rhel-7-server-extras-rpms" \
     --enable="rhel-7-server-ose-3.5-rpms" \
     --enable="rhel-7-fast-datapath-rpms"
+```
 
 ## Now, all the above 4 repos should be enabled only. Check with "yum repolist" command 
 
 
 # Install the software
 
+```
 yum -y install wget git net-tools bind-utils iptables-services bridge-utils bash-completion && \
 yum -y update && \
 yum -y install atomic-openshift-utils && \
 yum -y install atomic-openshift-excluder atomic-openshift-docker-excluder && \
 atomic-openshift-excluder unexclude
+```
 
 
 ## Install docker 
 
+```
 yum install docker
+```
 
+```
 docker version
+```
 (version should be 1.12, if not, something is wrong with the enabled repos) 
 
 Configure docker by adding the option "--insecure-registry 172.30.0.0\/16" to /etc/sysconfig/docker
 
 The following command will do that for you 
 
+```
 [ -f /tmp/docker.bak ] || ( sudo cp /etc/sysconfig/docker /tmp/docker.bak && \
 sudo sed -i '/^OPTIONS=/s/selinux-enabled -/selinux-enabled --insecure-registry 172.30.0.0\/16 -/' /etc/sysconfig/docker )
+```
 
 If not already, set this variable to the device of the extra disk (be careful to use the right device, not the root device!) 
 
+```
 MY_DEV=<your device path> 
+```
 
 ```
 cat <<EOF > /etc/sysconfig/docker-storage-setup
@@ -136,25 +166,33 @@ VG=docker-vg
 EOF
 ```
 
+```
 docker-storage-setup
+```
 (ensure no errors are shown!   Should see "Logical volume "docker-pool" created")  
 
 # Check docker 
 
+```
 systemctl is-active docker
 systemctl enable docker
 systemctl stop docker
 rm -rf /var/lib/docker/*
 systemctl restart docker
+```
 
 # test docker with hello-world image 
 
+```
 docker  run  hello-world   
+```
 (Must show "Hello from Docker!") 
 
 # Ensure NetworkManager is enabled
 
+```
 systemctl  enable  NetworkManager
+```
 
 ## Set up the ansible hosts file 
 
@@ -162,34 +200,44 @@ systemctl  enable  NetworkManager
 
 # Install OpenShift by running ansible install playbook 
 
+```
 ansible-playbook -e enable_excluders=false /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
 #ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
+```
 
 # Create the cluster admin for user admin
 
+```
 oadm policy add-cluster-role-to-user cluster-admin admin
+```
 
 # Set passwords / create new users
 
+```
 htpasswd /etc/origin/openshift-passwd dev
 htpasswd /etc/origin/openshift-passwd admin
+```
 
 # Verify OpenShift is working
 
+```
 oc get nodes 
+```
 (should return the master node, "ready")
 
 # Log into the console at https://master.$MY_FQDN/console/ 
 
 
+# Appendix I 
 
-Appendix I 
+Ensure these 2 variables are set (instructions above) and run the below command, starting with cat and ending with END. This will create the file /etc/ansible/hosts with the correct content.  
 
-# Ensure these 2 variables are set (instructions above) and run the below command, starting with cat and ending with END. This will create the file /etc/ansible/hosts with the correct content.  
-
+```
 SSH_USER
 MY_FQDN
+```
 
+```
 cat > /etc/ansible/hosts <<END
 # Create an OSEv3 group that contains the master, nodes, etcd, and lb groups.
 [OSEv3:children]
@@ -218,7 +266,6 @@ openshift_hosted_metrics_deploy=true
 
 # default subdomain to use for exposed routes
 openshift_master_default_subdomain=apps.$MY_FQDN
-
 # default project node selector
 osm_default_node_selector='env=dev'
 
@@ -247,24 +294,29 @@ master.$MY_FQDN
 [nodes]
 master.$MY_FQDN   openshift_public_hostname="master.$MY_FQDN"  openshift_schedulable=true openshift_node_labels="{'name': 'master', 'region': 'infra', 'env': 'dev'}"
 END
+```
 
 
-Appendix II
+# Appendix II
 
-# Copy an existing private key to the VM 
+## Copy an existing private key to the VM 
 
+```
 scp ~/.ssh/id_rsa  $MY_USER@$IP:.ssh/
 sudo cp ~ec2-user/.ssh/id_rsa /root/.ssh/ && sudo chmod 600 /root/.ssh/id_rsa
 sudo -i 
 ssh ec2-user@localhost id   # should work without a password 
+```
 
 
-Appendix III
+# Appendix III
 
-# If there are 2 network interfaces  
+## If there are 2 network interfaces  
 
 Note: if the VM has more than one network interface, add the following ansible variable to /etc/ansible/hosts for the master entry (bottom of file) 
+```
   openshift_hostname="<ip-of-private-net-interface>"
+```
 This variable overrides the internal cluster host name for the system. Use this when the system’s default IP address does not resolve to the system host name
 
 
