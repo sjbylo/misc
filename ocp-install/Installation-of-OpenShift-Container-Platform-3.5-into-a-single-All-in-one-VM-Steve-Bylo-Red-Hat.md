@@ -302,13 +302,14 @@ END
 
 # Appendix II
 
-Copy an existing private key to the VM 
+Copy your local private key to the VM 
 
 ```
 scp ~/.ssh/id_rsa  $MY_USER@$IP:.ssh/
-sudo cp ~ec2-user/.ssh/id_rsa /root/.ssh/ && sudo chmod 600 /root/.ssh/id_rsa
+ssh $MY_USER@localhost   # log into the VM
 sudo -i 
-ssh ec2-user@localhost id   # should work without a password 
+cp ~$MY_USER/.ssh/id_rsa /root/.ssh/ && sudo chmod 600 /root/.ssh/id_rsa
+ssh $MY_USER@localhost id   # should work without a password 
 ```
 
 
