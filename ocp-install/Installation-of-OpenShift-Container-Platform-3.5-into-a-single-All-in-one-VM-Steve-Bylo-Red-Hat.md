@@ -2,7 +2,7 @@
 
 ## May 2017 
 
-This steps have been distilled from the below 3.5 documentation links. 
+These steps have been distilled from the below 3.5 documentation links. 
 
 There is no 100% guarantee that the below instructions will work as-is in the target environment because the environment may be different to the one anticipated in these instructions.  Please always consult the following documentation if in doubt. 
 
@@ -29,7 +29,7 @@ https://docs.openshift.com/container-platform/3.5/install_config/install/advance
 
 ## Set up DNS entries 
 
-==> DNS must be configured <==
+*DNS must be configured*
 Note that setting hostnames in /etc/hosts *will not work* 
 Select a domain name (FQDN) you control, e.g. openshift.example.com 
 The hostname of the VM must be set to "master.<FQDN>" e.g. master.openshift.example.com 
