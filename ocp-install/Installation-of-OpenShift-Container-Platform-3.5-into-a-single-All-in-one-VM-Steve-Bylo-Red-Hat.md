@@ -29,7 +29,7 @@ https://docs.openshift.com/container-platform/3.5/install_config/install/advance
 
 ## Set up DNS entries 
 
-#DNS must be configured#
+_DNS must be configured_
 
 Note that setting hostnames in /etc/hosts *will not work* 
 
