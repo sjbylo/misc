@@ -1,12 +1,12 @@
-Installation of OpenShift Container Platform 3.5 into a single All-in-one VM
+## Installation of OpenShift Container Platform 3.5 into a single All-in-one VM
 
-May 2017 
+# May 2017 
 
 This steps have been distilled from the below 3.5 documentation links. 
 
 There is no 100% guarantee that the below instructions will work as-is in the target environment because the environment may be different to the one anticipated in these instructions.  Please always consult the following documentation if in doubt. 
 
-Documentation 
+## Documentation 
 https://docs.openshift.com/container-platform/3.5/install_config/install/prerequisites.html
 https://docs.openshift.com/container-platform/3.5/install_config/install/host_preparation.html
 https://docs.openshift.com/container-platform/3.5/install_config/install/advanced_install.html
