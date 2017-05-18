@@ -85,8 +85,8 @@ MY_DEV=/dev/sdb
 
 ```
 ssh $SSH_USER@`hostname` id 
-(should show the output of the "id" command)
 ```
+(should show the output of the "id" command)
 
 ## Register the server with Red Hat 
 
@@ -181,12 +181,12 @@ rm -rf /var/lib/docker/*
 systemctl restart docker
 ```
 
-# test docker with hello-world image 
+# Test docker with hello-world image 
 
 ```
 docker  run  hello-world   
 ```
-(Must show "Hello from Docker!") 
+(The output must show "Hello from Docker!") 
 
 # Ensure NetworkManager is enabled
 
@@ -200,9 +200,9 @@ systemctl  enable  NetworkManager
 
 # Install OpenShift by running ansible install playbook 
 
-```
 ansible-playbook -e enable_excluders=false /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
-#ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
+```
+ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
 ```
 
 # Create the cluster admin for user admin
