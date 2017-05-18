@@ -1,14 +1,17 @@
-## Installation of OpenShift Container Platform 3.5 into a single All-in-one VM
+# Installation of OpenShift Container Platform 3.5 into a single All-in-one VM
 
-# May 2017 
+## May 2017 
 
 This steps have been distilled from the below 3.5 documentation links. 
 
 There is no 100% guarantee that the below instructions will work as-is in the target environment because the environment may be different to the one anticipated in these instructions.  Please always consult the following documentation if in doubt. 
 
-## Documentation 
+# Documentation 
+
 https://docs.openshift.com/container-platform/3.5/install_config/install/prerequisites.html
+
 https://docs.openshift.com/container-platform/3.5/install_config/install/host_preparation.html
+
 https://docs.openshift.com/container-platform/3.5/install_config/install/advanced_install.html
 
 
@@ -24,12 +27,12 @@ https://docs.openshift.com/container-platform/3.5/install_config/install/advance
 8. Ensure ssh can be used to log into the VM without a password, and also from the VM itself (needed for ansible) 
 
 
-# Set up DNS entries 
+## Set up DNS entries 
 
-# ==> DNS must be configured <==
-# Note that setting hostnames in /etc/hosts *will not work* 
-# Select a domain name (FQDN) you control, e.g. openshift.example.com 
-# The hostname of the VM must be set to "master.<FQDN>" e.g. master.openshift.example.com 
+==> DNS must be configured <==
+Note that setting hostnames in /etc/hosts *will not work* 
+Select a domain name (FQDN) you control, e.g. openshift.example.com 
+The hostname of the VM must be set to "master.<FQDN>" e.g. master.openshift.example.com 
 
 # Set up the following DNS entries 
 
@@ -73,7 +76,7 @@ MY_DEV=/dev/sdb
 ssh $SSH_USER@`hostname` id 
 (should show the output of the "id" command)
 
-# Register the server with Red Hat 
+## Register the server with Red Hat 
 
 subscription-manager register --username=<user_name> --password=<password>
 
@@ -95,7 +98,7 @@ subscription-manager repos \
 # Now, all the above 4 repos should be enabled only. Check with "yum repolist" command 
 
 
-# Install the software
+## Install the software
 
 yum -y install wget git net-tools bind-utils iptables-services bridge-utils bash-completion && \
 yum -y update && \
@@ -104,7 +107,7 @@ yum -y install atomic-openshift-excluder atomic-openshift-docker-excluder && \
 atomic-openshift-excluder unexclude
 
 
-# Install docker 
+## Install docker 
 
 yum install docker
 
@@ -145,7 +148,7 @@ docker  run  hello-world
 
 systemctl  enable  NetworkManager
 
-# Set up the ansible hosts file 
+## Set up the ansible hosts file 
 
 << The Appendix describes how to do this >> 
 
