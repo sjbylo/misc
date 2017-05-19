@@ -265,7 +265,7 @@ SSH_USER
 MY_FQDN
 ```
 
-Run one of the following commands to create the /etc/ansible/hosts file. Check the content of the file.
+Run one of the following commands (curl or wget) to create the ansible inventory file. Check the content of the /etc/ansible/hosts file.
 
 The username and the domain names should be set correctly with the values of the above 2 variables. 
 
