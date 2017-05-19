@@ -84,7 +84,7 @@ MY_FQDN=mydomain.com
 MY_DEV=/dev/sdb  
 ```
 
-Ensure ssh works inside the VM using the VM's hostname by setting up the ssh keys (see Appendix 2 for help) 
+Ensure ssh works inside the VM using the VM's hostname by setting up the ssh keys (see Appendix II for help) 
 
 ```
 ssh $SSH_USER@`hostname` id 
@@ -199,7 +199,7 @@ systemctl  enable  NetworkManager
 
 ## Set up the ansible hosts file 
 
-<< The Appendix describes how to do this >> 
+**The Appendix I describes how to do this.**
 
 ### Install OpenShift by running ansible install playbook 
 
