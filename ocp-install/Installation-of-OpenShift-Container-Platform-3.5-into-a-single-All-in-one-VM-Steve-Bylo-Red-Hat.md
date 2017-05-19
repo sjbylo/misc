@@ -333,7 +333,7 @@ Copy your local private key to the VM
 scp ~/.ssh/id_rsa  $SSH_USER@$IP:.ssh/
 ssh $SSH_USER@$IP   # log into the VM
 sudo -i 
-cp ~$SSH_USER/.ssh/id_rsa /root/.ssh/ && sudo chmod 600 /root/.ssh/id_rsa
+cp /home/$SSH_USER/.ssh/id_rsa /root/.ssh/ && sudo chmod 600 /root/.ssh/id_rsa
 ssh $SSH_USER@`hostname` id   # should work without a password 
 ```
 
