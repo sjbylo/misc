@@ -149,7 +149,7 @@ docker version
 
 Configure docker by adding the option "--insecure-registry 172.30.0.0\/16" to /etc/sysconfig/docker
 
-The following command will do that for you 
+The following command will do that for you.
 
 ```
 [ -f /tmp/docker.bak ] || ( sudo cp /etc/sysconfig/docker /tmp/docker.bak && \
@@ -168,6 +168,8 @@ DEVS=$MY_DEV
 VG=docker-vg
 EOF
 ```
+
+Set up docker storage.
 
 ```
 docker-storage-setup
@@ -209,13 +211,13 @@ ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
 
 ### If there is a problem...
 
-Try to find a fix and re-run the above ansible-playbook command and add "-vvv" to see more verboose output:
+Try to find a fix and re-run the above ansible-playbook command and add "-vvv" to see more verboose output.
 
 ```
 ansible-playbook -vvv /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
 ```
 
-It is also possible to uninstall everything, in order to try again: 
+It is also possible to uninstall everything, in order to try again. 
 
 ```
 ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
@@ -246,7 +248,7 @@ oadm policy add-cluster-role-to-user cluster-admin admin
 
 ### Log into the console 
 
-Open the following URL in your browser and log in as users 'dev' or 'admin':
+Open the following URL in your browser and log in as users 'dev' or 'admin'.
 
 ```
 https://master.$MY_FQDN/console/ 
@@ -328,11 +330,11 @@ END
 Copy your local private key to the VM 
 
 ```
-scp ~/.ssh/id_rsa  $MY_USER@$IP:.ssh/
-ssh $MY_USER@localhost   # log into the VM
+scp ~/.ssh/id_rsa  $SSH_USER@$IP:.ssh/
+ssh $SSH_USER@$IP   # log into the VM
 sudo -i 
-cp ~$MY_USER/.ssh/id_rsa /root/.ssh/ && sudo chmod 600 /root/.ssh/id_rsa
-ssh $MY_USER@localhost id   # should work without a password 
+cp ~$SSH_USER/.ssh/id_rsa /root/.ssh/ && sudo chmod 600 /root/.ssh/id_rsa
+ssh $SSH_USER@`hostname` id   # should work without a password 
 ```
 
 
