@@ -258,14 +258,14 @@ https://master.$MY_FQDN:8443/console/
 
 # Appendix I 
 
-Ensure these 2 variables are set (instructions above) and run the below command, starting with cat and ending with END. This will create the file /etc/ansible/hosts with the correct content.  
+Ensure these 2 variables are set (instructions above).
 
 ```
 SSH_USER
 MY_FQDN
 ```
 
-Run one of the following commands (curl or wget) to create the ansible inventory file. Check the content of the /etc/ansible/hosts file.
+Run one of the following commands (curl or wget) to create the ansible inventory file. Check the content of the /etc/ansible/hosts file look like the below example. 
 
 The username and the domain names should be set correctly with the values of the above 2 variables. 
 
@@ -277,7 +277,7 @@ curl -s https://raw.githubusercontent.com/sjbylo/misc/master/ocp-install/create-
 wget -q -O - https://raw.githubusercontent.com/sjbylo/misc/master/ocp-install/create-hosts  | bash
 ```
 
-Ensure the inventory file looks like the following.  Both the username and the domain have been added.
+Ensure the inventory file looks like the following.  Both the username (\$SSH_USER) and the domain (\$MY_FQDN) have been added.
 
 ```
 [OSEv3:children]
