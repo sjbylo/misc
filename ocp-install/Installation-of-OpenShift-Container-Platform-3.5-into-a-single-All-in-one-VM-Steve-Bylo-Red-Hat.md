@@ -132,14 +132,15 @@ yum -y install wget git net-tools bind-utils iptables-services bridge-utils bash
 yum -y update && \
 yum -y install atomic-openshift-utils && \
 yum -y install atomic-openshift-excluder atomic-openshift-docker-excluder && \
-atomic-openshift-excluder unexclude
+atomic-openshift-excluder unexclude && \
+echo "SOFTWARE INSTALLATION COMPLETED!"
 ```
 
 
 ## Install docker 
 
 ```
-yum install docker
+yum -y install docker
 ```
 
 ```
