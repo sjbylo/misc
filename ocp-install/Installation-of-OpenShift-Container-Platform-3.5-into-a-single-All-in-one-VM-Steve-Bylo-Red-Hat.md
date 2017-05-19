@@ -197,9 +197,9 @@ docker  run  hello-world
 systemctl  enable  NetworkManager
 ```
 
-## Set up the ansible hosts file 
+## Set up the ansible inventory file 
 
-**The Appendix I describes how to do this.**
+**Please see 'Appendix I' below on how to set up the ansible inventory file.**
 
 ### Install OpenShift by running ansible install playbook 
 
