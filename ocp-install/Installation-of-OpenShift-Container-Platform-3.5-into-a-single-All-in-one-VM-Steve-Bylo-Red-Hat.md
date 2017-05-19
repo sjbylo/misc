@@ -265,64 +265,16 @@ SSH_USER
 MY_FQDN
 ```
 
+Run one of the following commands to create the /etc/ansible/hosts file. Check the content of the file.
+
+The username and the domain names should be set correctly with the values of the above 2 variables. 
+
 ```
-cat > /etc/ansible/hosts <<END
-# Create an OSEv3 group that contains the master, nodes, etcd, and lb groups.
-[OSEv3:children]
-masters
-etcd
-nodes
+curl -s https://raw.githubusercontent.com/sjbylo/misc/master/ocp-install/create-hosts | bash 
+```
 
-# Set variables common for all OSEv3 hosts
-[OSEv3:vars]
-ansible_user=$SSH_USER
-# Uninstall playbook needed the following 
-#ansible_ssh_user=$SSH_USER
-ansible_become=true
-deployment_type=openshift-enterprise
-debug_level=4
-openshift_clock_enabled=true
-
-openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
-
-# dev and admin users
-openshift_master_htpasswd_users={'dev': 'your-htpasswd-hash-here', 'admin': 'your-htpasswd-hash-here'}
-
-osm_default_node_selector='env=dev'
-openshift_hosted_metrics_deploy=true
-#openshift_hosted_logging_deploy=true
-
-# default subdomain to use for exposed routes
-openshift_master_default_subdomain=apps.$MY_FQDN
-# default project node selector
-osm_default_node_selector='env=dev'
-
-# Router selector (optional)
-openshift_hosted_router_selector='env=dev'
-openshift_hosted_router_replicas=1
-
-# Registry selector (optional)
-openshift_registry_selector='env=dev'
-
-# Configure metricsPublicURL in the master config for cluster metrics
-openshift_master_metrics_public_url=https://hawkular-metrics.$MY_FQDN
-
-# Configure loggingPublicURL in the master config for aggregate logging
-#openshift_master_logging_public_url=https://kibana.$MY_FQDN
-
-# host group for masters
-[masters]
-master.$MY_FQDN
-
-# Uncomment the following 3 lines to enable etcd to run in non-embedded mode 
-## host group for etcd
-#[etcd]
-#master.$MY_FQDN
-
-# host group for nodes, includes region info
-[nodes]
-master.$MY_FQDN   openshift_public_hostname="master.$MY_FQDN"  openshift_schedulable=true openshift_node_labels="{'name': 'master', 'region': 'infra', 'env': 'dev'}"
-END
+```
+wget -q -O - https://raw.githubusercontent.com/sjbylo/misc/master/ocp-install/create-hosts  | bash
 ```
 
 
