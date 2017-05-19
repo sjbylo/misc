@@ -238,7 +238,7 @@ htpasswd /etc/origin/openshift-passwd admin
 
 ### Set the cluster admin user
 
-Once the above command is working designate the admin user to be a cluster admin
+Once 'oc get nodes' is working designate the admin user to be a cluster admin
 
 ```
 oadm policy add-cluster-role-to-user cluster-admin admin
