@@ -69,19 +69,19 @@ Run all commands as root
 Ensure these variable are set (change to suit your environment!)  
 
 ```
-IP=ip-address-of-the-interface 
-SSH_USER=your-user
-MY_FQDN=your-FQDN
-MY_DEV=your-device-path
+export IP=ip-address-of-the-interface 
+export SSH_USER=your-user
+export MY_FQDN=your-FQDN
+export MY_DEV=your-device-path
 ```
 
 ## Example
 
 ```
-IP=192.168.10.10
-SSH_USER=ec2-user 
-MY_FQDN=mydomain.com
-MY_DEV=/dev/sdb  
+export IP=192.168.10.10
+export SSH_USER=ec2-user 
+export MY_FQDN=mydomain.com
+export MY_DEV=/dev/sdb  
 ```
 
 Ensure ssh works inside the VM using the VM's hostname by setting up the ssh keys (see Appendix II for help) 
