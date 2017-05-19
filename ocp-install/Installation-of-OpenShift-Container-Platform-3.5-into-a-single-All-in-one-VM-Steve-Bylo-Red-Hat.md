@@ -289,9 +289,10 @@ openshift_master_metrics_public_url=https://hawkular-metrics.$MY_FQDN
 [masters]
 master.$MY_FQDN
 
-# host group for etcd
-[etcd]
-master.$MY_FQDN
+# Uncomment the following 3 lines to enable etcd to run in non-embedded mode 
+## host group for etcd
+#[etcd]
+#master.$MY_FQDN
 
 # host group for nodes, includes region info
 [nodes]
