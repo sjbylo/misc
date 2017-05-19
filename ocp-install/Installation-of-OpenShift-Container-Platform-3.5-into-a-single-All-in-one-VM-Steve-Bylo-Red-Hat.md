@@ -215,7 +215,7 @@ Try to find a fix and re-run the above ansible-playbook command and add "-vvv" t
 ansible-playbook -vvv /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
 ```
 
-It is also possible to uninstall everything and repeat the install with the following comand:
+It is also possible to uninstall everything, in order to try again: 
 
 ```
 ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
