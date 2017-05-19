@@ -201,7 +201,7 @@ systemctl  enable  NetworkManager
 
 << The Appendix describes how to do this >> 
 
-Install OpenShift by running ansible install playbook 
+### Install OpenShift by running ansible install playbook 
 
 ```
 ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
@@ -209,7 +209,11 @@ ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
 
 ### If there is a problem...
 
-Try to find a fix and re-run the above ansible-playbook command and add "-vvv" to see more verboose output.
+Try to find a fix and re-run the above ansible-playbook command and add "-vvv" to see more verboose output:
+
+```
+ansible-playbook -vvv /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
+```
 
 It is also possible to uninstall everything and repeat the install with the following comand:
 
@@ -217,27 +221,33 @@ It is also possible to uninstall everything and repeat the install with the foll
 ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
 ```
 
-Create the cluster admin for user admin
+### Create the cluster admin for user admin
 
 ```
 oadm policy add-cluster-role-to-user cluster-admin admin
 ```
 
-Set passwords / create new users
+### Set passwords / create new users
 
 ```
 htpasswd /etc/origin/openshift-passwd dev
 htpasswd /etc/origin/openshift-passwd admin
 ```
 
-Verify OpenShift is working
+### Verify OpenShift is working
 
 ```
 oc get nodes 
 ```
 (should return the master node, "ready")
 
-Log into the console at https://master.$MY_FQDN/console/ 
+### Log into the console 
+
+Open the following URL in your browser:
+
+```
+https://master.$MY_FQDN/console/ 
+```
 
 
 # Appendix I 
