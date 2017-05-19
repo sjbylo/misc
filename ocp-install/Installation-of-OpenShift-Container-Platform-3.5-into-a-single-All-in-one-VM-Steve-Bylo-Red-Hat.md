@@ -6,7 +6,7 @@ These steps have been distilled from the below 3.5 documentation links.
 
 There is no 100% guarantee that the below instructions will work as-is in the target environment because the environment may be different to the one anticipated in these instructions.  Please always consult the following documentation if in doubt. 
 
-# Documentation 
+# Official Documentation 
 
 https://docs.openshift.com/container-platform/3.5/install_config/install/prerequisites.html
 
