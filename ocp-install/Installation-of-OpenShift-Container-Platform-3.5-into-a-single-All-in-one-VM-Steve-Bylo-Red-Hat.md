@@ -203,9 +203,18 @@ systemctl  enable  NetworkManager
 
 Install OpenShift by running ansible install playbook 
 
-ansible-playbook -e enable_excluders=false /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
 ```
 ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
+```
+
+### If there is a problem...
+
+Try to find a fix and re-run the above ansible-playbook command and add "-vvv" to see more verboose output.
+
+It is also possible to uninstall everything and repeat the install with the following comand:
+
+```
+ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
 ```
 
 Create the cluster admin for user admin
