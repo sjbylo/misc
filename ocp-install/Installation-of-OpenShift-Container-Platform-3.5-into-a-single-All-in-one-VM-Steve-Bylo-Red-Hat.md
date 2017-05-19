@@ -221,19 +221,6 @@ It is also possible to uninstall everything and repeat the install with the foll
 ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
 ```
 
-### Create the cluster admin for user admin
-
-```
-oadm policy add-cluster-role-to-user cluster-admin admin
-```
-
-### Set passwords / create new users
-
-```
-htpasswd /etc/origin/openshift-passwd dev
-htpasswd /etc/origin/openshift-passwd admin
-```
-
 ### Verify OpenShift is working
 
 ```
@@ -241,9 +228,25 @@ oc get nodes
 ```
 (should return the master node, "ready")
 
+### Set passwords / create new users
+
+Once 'oc get nodes' is working, set your passwords.
+```
+htpasswd /etc/origin/openshift-passwd dev
+htpasswd /etc/origin/openshift-passwd admin
+```
+
+### Set the cluster admin user
+
+Once the above command is working designate the admin user to be a cluster admin
+
+```
+oadm policy add-cluster-role-to-user cluster-admin admin
+```
+
 ### Log into the console 
 
-Open the following URL in your browser:
+Open the following URL in your browser and log in as users 'dev' or 'admin':
 
 ```
 https://master.$MY_FQDN/console/ 
