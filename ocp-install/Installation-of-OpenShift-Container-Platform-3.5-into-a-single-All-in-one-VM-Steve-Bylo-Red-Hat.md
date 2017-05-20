@@ -98,9 +98,9 @@ subscription-manager register --username=<user_name> --password=<password>
 ```
 
 ```
-subscription-manager list --available  > /tmp/list
+subscription-manager list --available  > /tmp/subs.txt
 ```
-(find the 'pool id' in the /tmp/list file for 'OpenShift Container Platform' and use it in the next command)
+(find the 'pool id' in the /tmp/subs.txt file for 'OpenShift Container Platform' and use it in the next command)
 
 ```
 subscription-manager attach --pool=<pool_id>
