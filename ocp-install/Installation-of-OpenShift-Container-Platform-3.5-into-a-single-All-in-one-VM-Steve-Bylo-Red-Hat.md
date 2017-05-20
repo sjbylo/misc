@@ -133,7 +133,7 @@ yum -y update && \
 yum -y install atomic-openshift-utils && \
 yum -y install atomic-openshift-excluder atomic-openshift-docker-excluder && \
 atomic-openshift-excluder unexclude && \
-echo "SOFTWARE INSTALLATION COMPLETED!"
+echo "SOFTWARE INSTALLATION COMPLETED"
 ```
 
 
