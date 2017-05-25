@@ -1,0 +1,60 @@
+[OSEv3:children]
+masters
+etcd
+nodes
+
+# Set variables common for all OSEv3 hosts
+[OSEv3:vars]
+ansible_user=ec2-user
+ansible_ssh_user=ec2-user  # Uninstall playbook needed this! 
+ansible_become=true
+deployment_type=openshift-enterprise
+debug_level=4
+openshift_clock_enabled=true
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
+
+# dev and admin users
+openshift_master_htpasswd_users={'dev': '$apr1$53Nk0nVX$Jhjjj9Kf3UR5nUFuDpNYf.', 'admin': '$apr1$AJJCs65m$latfMkMvqNw3K/qFH9l9b.'}
+
+osm_default_node_selector='env=dev'
+openshift_hosted_metrics_deploy=true
+#openshift_hosted_logging_deploy=true
+
+openshift_cloudprovider_kind=aws
+openshift_cloudprovider_aws_access_key="{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
+openshift_cloudprovider_aws_secret_key="{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
+
+# default subdomain to use for exposed routes
+openshift_master_default_subdomain=apps.YOURDOMAIN
+
+# default project node selector
+osm_default_node_selector='env=dev'
+
+# Router selector (optional)
+openshift_hosted_router_selector='env=dev'
+openshift_hosted_router_replicas=1
+
+# Registry selector (optional)
+openshift_registry_selector='env=dev'
+
+# Configure metricsPublicURL in the master config for cluster metrics
+openshift_master_metrics_public_url=https://hawkular-metrics.YOURDOMAIN
+
+# Configure loggingPublicURL in the master config for aggregate logging
+#openshift_master_logging_public_url=https://kibana.YOURDOMAIN
+
+# host group for masters
+[masters]
+INSTANCE_PRIVATE_DOMAIN
+# host group for etcd
+[etcd]
+INSTANCE_PRIVATE_DOMAIN
+
+# host group for nodes, includes region info
+[nodes]
+INSTANCE_PRIVATE_DOMAIN openshift_public_hostname="master.YOURDOMAIN" openshift_schedulable=false openshift_hostname="INSTANCE_PRIVATE_DOMAIN" openshift_node_labels="{'name': 'master','region': 'ap-southeast-1', 'zone': 'ap-southeast-1a', 'env': 'dev'}"
+
+#infra-hostname openshift_node_labels="{'region': 'infra'}"
+
+
+
