@@ -29,9 +29,9 @@ https://docs.openshift.com/container-platform/3.5/install_config/install/advance
 
 ## Set up DNS entries 
 
-DNS must be configured
+All the proper DNS entries must be configured.
 
-Note that setting hostnames in /etc/hosts *will not work*. 
+Note that setting hostnames in /etc/hosts *will not work*. DNS entries are required. 
 
 Select a domain name (FQDN) you control, e.g. openshift.example.com 
 
