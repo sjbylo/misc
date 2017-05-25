@@ -17,6 +17,10 @@ openshift_clock_enabled=true
 
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
 
+#openshift_cloudprovider_kind=aws
+#openshift_cloudprovider_aws_access_key="{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
+#openshift_cloudprovider_aws_secret_key="{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
+
 # dev and admin users
 openshift_master_htpasswd_users={'dev': 'your-htpasswd-hash-here', 'admin': 'your-htpasswd-hash-here'}
 
