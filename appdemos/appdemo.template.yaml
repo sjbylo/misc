@@ -3,10 +3,7 @@ kind: Template
 metadata:
   creationTimestamp: 2017-04-07T09:33:12Z
   name: appdemo
-  namespace: openshift
   resourceVersion: "804"
-  selfLink: /oapi/v1/namespaces/openshift/templates/appdemo
-  uid: 37e79970-1b75-11e7-8171-068c0cb70a55
 objects:
 - apiVersion: v1
   kind: Secret
