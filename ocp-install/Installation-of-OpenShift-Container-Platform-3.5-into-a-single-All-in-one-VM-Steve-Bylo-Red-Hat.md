@@ -252,7 +252,7 @@ oadm policy add-cluster-role-to-user cluster-admin admin
 Open the following URL in your browser and log in as users 'dev' or 'admin'.
 
 ```
-https://master.$MY_FQDN:8443/console/ 
+https://master.$MY_FQDN/console/ 
 ```
 
 
