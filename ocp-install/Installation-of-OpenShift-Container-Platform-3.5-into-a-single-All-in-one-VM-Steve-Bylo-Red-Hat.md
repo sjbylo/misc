@@ -21,7 +21,7 @@ https://docs.openshift.com/container-platform/3.5/install_config/install/advance
 1. At least 8 GB of RAM, better 16 GB or more
 1. 2 vCPU 
 1. Attach an extra disk for docker storage, e.g. /dev/sdb
-1. One network interface with a static IP  
+1. One network interface only, with one static IP (which does not conflict with the following: 10.128.0.0/14 or 172.30.0.0/16)
 1. The VM must have internet access 
 1. A valid subscription of OpenShift, e.g. evaluation subs 
 1. Ensure ssh can be used to log into the VM without a password, and also from the VM itself (needed for ansible) 
