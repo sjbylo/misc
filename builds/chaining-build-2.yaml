@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: image-build
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: image-build:latest
+  source:
+    dockerfile: |-
+      FROM jee-runtime:latest
+      COPY ROOT.war /deployments/ROOT.war
+    images:
+    - from: 
+        kind: ImageStreamTag
+        name: artifact-image:latest
+      paths: 
+      - sourcePath: /wildfly/standalone/deployments/ROOT.war
+        destinationDir: "."
+  strategy:
+    dockerStrategy:
+      from: 
+        kind: ImageStreamTag
+        name: jee-runtime:latest
+  triggers:
+  - imageChange: {}
+    type: ImageChange
