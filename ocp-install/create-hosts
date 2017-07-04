@@ -25,14 +25,15 @@ openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 
 openshift_master_htpasswd_users={'dev': 'your-htpasswd-hash-here', 'admin': 'your-htpasswd-hash-here'}
 
 osm_default_node_selector='env=dev'
-openshift_hosted_metrics_deploy=true
+#openshift_hosted_metrics_deploy=true
 #openshift_hosted_logging_deploy=true
 
 # default subdomain to use for exposed routes
 openshift_master_default_subdomain=apps.$MY_FQDN
 
-# Set the port of the master (default is 8443) 
-openshift_master_api_port=443
+# Set the port of the master (default is 8443) if the master is a dedicated host
+#openshift_master_api_port=443
+#openshift_master_console_port=443
 
 # default project node selector
 osm_default_node_selector='env=dev'
@@ -60,5 +61,5 @@ master.$MY_FQDN
 
 # host group for nodes, includes region info
 [nodes]
-master.$MY_FQDN   openshift_public_hostname="master.$MY_FQDN"  openshift_schedulable=true openshift_node_labels="{'name': 'master', 'region': 'infra', 'env': 'dev'}"
+master.$MY_FQDN   openshift_public_hostname="master.public.$MY_FQDN"  openshift_schedulable=true openshift_node_labels="{'name': 'master', 'region': 'infra', 'env': 'dev'}"
 END
