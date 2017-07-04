@@ -338,6 +338,8 @@ master.example.com   openshift_public_hostname="master.example.com"  openshift_s
 
 # Appendix II
 
+See: http://www.linuxproblem.org/art_9.html
+
 Copy your local private key to the VM 
 
 ```
