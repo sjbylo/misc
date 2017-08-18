@@ -32,7 +32,7 @@ osm_default_node_selector='env=dev'
 openshift_disable_check=memory_availability,disk_availability
 
 # default subdomain to use for exposed routes
-openshift_master_default_subdomain=apps.public.$MY_FQDN
+openshift_master_default_subdomain=apps.$MY_FQDN
 
 # Set the port of the master (default is 8443) if the master is a dedicated host
 #openshift_master_api_port=443

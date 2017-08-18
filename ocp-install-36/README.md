@@ -277,7 +277,7 @@ curl -s https://raw.githubusercontent.com/sjbylo/misc/master/ocp-install-36/crea
 wget -q -O - https://raw.githubusercontent.com/sjbylo/misc/master/ocp-install-36/create-hosts  | bash
 ```
 
-Ensure the inventory file looks like the following.  Both the username (\$SSH_USER) and the domain (\$MY_FQDN) have been added.
+Ensure the inventory file looks like the following.  Both the username (\$SSH_USER) and the domain (\$MY_FQDN) have been substituted.
 
 ```
 [OSEv3:children]
