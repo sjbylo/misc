@@ -17,7 +17,7 @@ https://docs.openshift.com/container-platform/3.6/install_config/install/advance
 
 # Create a VM with the following
 
-1. RHEL 7.3 
+1. RHEL 7.4 
 1. At least 8 GB of RAM, better 16 GB or more
 1. 2 vCPU 
 1. Attach an extra disk for docker storage, e.g. /dev/sdb
