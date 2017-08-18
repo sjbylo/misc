@@ -270,11 +270,11 @@ Run one of the following commands (curl or wget) to create the ansible inventory
 The username and the domain names should be set correctly with the values of the above 2 variables. 
 
 ```
-curl -s https://raw.githubusercontent.com/sjbylo/misc/master/ocp-install/create-hosts | bash 
+curl -s https://raw.githubusercontent.com/sjbylo/misc/master/ocp-install-36/create-hosts | bash 
 ```
 
 ```
-wget -q -O - https://raw.githubusercontent.com/sjbylo/misc/master/ocp-install/create-hosts  | bash
+wget -q -O - https://raw.githubusercontent.com/sjbylo/misc/master/ocp-install-36/create-hosts  | bash
 ```
 
 Ensure the inventory file looks like the following.  Both the username (\$SSH_USER) and the domain (\$MY_FQDN) have been added.
