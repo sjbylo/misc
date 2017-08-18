@@ -64,5 +64,6 @@ master.$MY_FQDN
 
 # host group for nodes, includes region info
 [nodes]
-master.$MY_FQDN   openshift_public_hostname="master.public.$MY_FQDN"  openshift_schedulable=true openshift_node_labels="{'name': 'master', 'region': 'infra', 'env': 'dev'}"
+master.$MY_FQDN openshift_schedulable=true openshift_node_labels="{'name': 'master', 'region': 'infra', 'env': 'dev'}"
+#master.$MY_FQDN openshift_public_hostname="master.public.$MY_FQDN"  openshift_schedulable=true openshift_node_labels="{'name': 'master', 'region': 'infra', 'env': 'dev'}"
 END
