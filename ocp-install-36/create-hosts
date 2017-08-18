@@ -1,3 +1,5 @@
+[ -f /etc/ansible/hosts ] && echo Backing up existing hosts file && cp -v /etc/ansible/hosts /tmp/hosts.`date +%Y%m%d-%H%M%S`
+
 cat > /etc/ansible/hosts <<END
 # Create an OSEv3 group that contains the master, nodes, etcd, and lb groups.
 [OSEv3:children]
