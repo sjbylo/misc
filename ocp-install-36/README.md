@@ -204,6 +204,14 @@ systemctl  enable  NetworkManager
 
 **Please see 'Appendix I' below on how to set up the ansible inventory file.**
 
+### Check Ansible 
+
+Test ansible in an adhoc way to ensure all nodes can be reached via ssh in a passwordless way.
+
+```
+ansible OSEv3 -m ping
+```
+
 ### Install OpenShift by running ansible install playbook 
 
 ```
