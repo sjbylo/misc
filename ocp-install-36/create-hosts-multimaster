@@ -108,19 +108,19 @@ openshift_hosted_registry_replicas=3
 
 # host group for masters
 [masters]
-master-1.$MY_DOMAIN
-master-2.$MY_DOMAIN
-master-3.$MY_DOMAIN
+master01.$MY_DOMAIN
+master02.$MY_DOMAIN
+master03.$MY_DOMAIN
 
 # host group for nodes, includes region info
 [nodes]
-master-1.$MY_DOMAIN
-master-2.$MY_DOMAIN
-master-3.$MY_DOMAIN
-infra-1.$MY_DOMAIN openshift_node_labels="{'region': 'infra', 'zone': 'default'}" 
-infra-2.$MY_DOMAIN openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
-infra-3.$MY_DOMAIN openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
-app-1.$MY_DOMAIN   openshift_node_labels="{'region': 'primary', 'zone': 'east'}"  
-app-2.$MY_DOMAIN   openshift_node_labels="{'region': 'primary', 'zone': 'west'}" 
+master01.$MY_DOMAIN
+master02.$MY_DOMAIN
+master03.$MY_DOMAIN
+infra01.$MY_DOMAIN openshift_node_labels="{'region': 'infra', 'zone': 'default'}" 
+infra02.$MY_DOMAIN openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
+infra03.$MY_DOMAIN openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
+app01.$MY_DOMAIN  openshift_node_labels="{'region': 'primary', 'zone': 'east'}"  
+app02.$MY_DOMAIN  openshift_node_labels="{'region': 'primary', 'zone': 'west'}" 
 END
 
