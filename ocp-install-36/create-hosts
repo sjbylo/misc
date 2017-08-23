@@ -9,12 +9,10 @@ nodes
 
 # Set variables common for all OSEv3 hosts
 [OSEv3:vars]
-ansible_user=$SSH_USER
-# Uninstall playbook needed the following 
-#ansible_ssh_user=$SSH_USER
+ansible_ssh_user=$SSH_USER
 ansible_become=true
 deployment_type=openshift-enterprise
-debug_level=4
+#debug_level=4
 openshift_clock_enabled=true
 
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
