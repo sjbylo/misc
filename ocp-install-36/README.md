@@ -42,7 +42,6 @@ The hostname of the VM must be set to "master.<FQDN>" e.g. master.openshift.exam
 
 1. Wildcard entry:    *.apps.openshift.example.com              => $IP
 1. A record:          master.openshift.example.com              => $IP
-1. A record:          hawkular-metrics.openshift.example.com    => $IP
 
 Log into the VM with ssh 
 
@@ -326,7 +325,7 @@ openshift_hosted_router_replicas=1
 openshift_registry_selector='env=dev'
 
 # Configure metricsPublicURL in the master config for cluster metrics
-openshift_master_metrics_public_url=https://hawkular-metrics.example.com
+#openshift_master_metrics_public_url=https://hawkular-metrics.example.com
 
 # Configure loggingPublicURL in the master config for aggregate logging
 #openshift_master_logging_public_url=https://kibana.example.com
