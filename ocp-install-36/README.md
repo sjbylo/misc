@@ -153,7 +153,7 @@ The following command will do that for you.
 
 ```
 [ -f /tmp/docker.bak ] || ( sudo cp /etc/sysconfig/docker /tmp/docker.bak && \
-sudo sed -i '/^OPTIONS=/s/selinux-enabled -/selinux-enabled --insecure-registry 172.30.0.0\/16 -/' /etc/sysconfig/docker )
+sudo sed -i '/^OPTIONS=/s/--selinux-enabled /--selinux-enabled --insecure-registry 172.30.0.0\/16 /' /etc/sysconfig/docker )
 ```
 
 If not already, set this variable to the device of the extra disk (be careful to use the right device, not the root device!) 
