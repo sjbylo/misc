@@ -14,6 +14,9 @@ https://docs.openshift.com/container-platform/3.7/install_config/install/host_pr
 
 https://docs.openshift.com/container-platform/3.7/install_config/install/advanced_install.html
 
+# Further reading
+
+http://v1.uncontained.io/playbooks/installation/ 
 
 # Create a VM with the following
 
