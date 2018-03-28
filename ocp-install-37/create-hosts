@@ -19,7 +19,9 @@ openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 
 
 # AWS related configuration
 
-#openshift_cloudprovider_kind=aws
+openshift_cloudprovider_kind=aws
+openshift_clusterid=cluster01   # Set this to the id of the cluster (need to tag ec2 resources) 
+
 #openshift_cloudprovider_aws_access_key="{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
 #openshift_cloudprovider_aws_secret_key="{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
 
@@ -43,14 +45,14 @@ openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 
 #openshift_hosted_registry_enforcequota=true
 
 # dev and admin users
-openshift_master_htpasswd_users={'dev': 'your-htpasswd-hash-here', 'admin': 'your-htpasswd-hash-here'}
+openshift_master_htpasswd_users={'dev': '$apr1$PTuOXsIl$tb8wyZQY3S9XkQFL8Mvgz.', 'admin': '$apr1$PTuOXsIl$tb8wyZQY3S9XkQFL8Mvgz.'}
 
 osm_default_node_selector='env=dev'
-#openshift_hosted_metrics_deploy=true
+openshift_hosted_metrics_deploy=true
 #openshift_hosted_logging_deploy=true
 
 # Disable some pre-flight checks 
-openshift_disable_check=memory_availability,disk_availability
+openshift_disable_check=memory_availability,disk_availability,package_version
 
 # default subdomain to use for exposed routes
 openshift_master_default_subdomain=apps.$MY_FQDN
@@ -85,5 +87,5 @@ master.$MY_FQDN
 
 # host group for nodes, includes region info
 [nodes]
-master.$MY_FQDN openshift_public_hostname="master.$MY_FQDN"  openshift_schedulable=true openshift_node_labels="{'name': 'master', 'region': 'infra', 'env': 'dev'}"
+master.$MY_FQDN openshift_public_hostname="master.$MY_FQDN"  openshift_schedulable=true openshift_node_labels="{'name': 'master', 'region': 'infra', 'env': 'dev'}" ansible_connection=local
 END
