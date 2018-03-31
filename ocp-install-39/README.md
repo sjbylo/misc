@@ -20,15 +20,14 @@ http://v1.uncontained.io/playbooks/installation/
 
 # Create a VM with the following
 
-1. RHEL 7.4 
+1. RHEL 7.4 or 7.5
 1. At least 8 GB of RAM, better 16 GB or more
-1. 2 vCPU 
-1. Attach an extra disk for docker storage, e.g. /dev/sdb
+1. 2 vCPU or more 
+1. Attach an extra 30+GB disk for docker storage, e.g. /dev/sdb
 1. One network interface only, with one static IP (which does not conflict with the following: 10.128.0.0/14 or 172.30.0.0/16)
 1. The VM must have internet access 
 1. A valid subscription of OpenShift, e.g. evaluation subs 
-1. Ensure ssh can be used to log into the VM without a password, and also from the VM itself (needed for ansible) 
-
+1. Console or remote VM access
 
 ## Set up DNS entries 
 
@@ -292,7 +291,8 @@ curl -s https://raw.githubusercontent.com/sjbylo/misc/master/ocp-install-36/crea
 wget -q -O - https://raw.githubusercontent.com/sjbylo/misc/master/ocp-install-36/create-hosts  | bash
 ```
 
-Ensure the inventory file looks like the following.  Both the username (\$SSH_USER) and the domain (\$MY_FQDN) have been substituted.
+Ensure the inventory file looks like the following.  Note, do not use the below but instead use the curl/bash command above.
+Both the username (\$SSH_USER) and the domain (\$MY_FQDN) have been substituted.
 
 ```
 [OSEv3:children]
@@ -365,7 +365,6 @@ cp /home/$SSH_USER/.ssh/id_rsa /root/.ssh/ && sudo chmod 600 /root/.ssh/id_rsa
 ssh $SSH_USER@`hostname` id   # should work without a password 
 ```
 
-
 # Appendix III
 
 If there are 2 network interfaces  
@@ -374,7 +373,6 @@ Note: if the VM has more than one network interface, add the following ansible v
 ```
   openshift_hostname="<ip-of-private-net-interface>"
 ```
-This variable overrides the internal cluster host name for the system. Use this when the system’s default IP address does not resolve to the system host name
 
-
+This variable overrides the internal cluster host name for the system. Use this when the system’s default IP address does not resolve to the system host name.
 
