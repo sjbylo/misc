@@ -1,3 +1,5 @@
+[ ! "$SSH_USER" ] || ! [ "$MY_FQDN" ] && echo "Please define both varables first (SSH_USER and MY_DOMAIN)" >&2 && exit 1
+
 [ -f /etc/ansible/hosts ] && echo Backing up existing hosts file && cp -v /etc/ansible/hosts /tmp/hosts.`date +%Y%m%d-%H%M%S`
 
 cat > /etc/ansible/hosts <<END

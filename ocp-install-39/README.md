@@ -1,6 +1,6 @@
 # Installation of OpenShift Container Platform 3.9 into a single All-in-one VM
 
-## Mar 2018 
+## March 2018 
 
 These steps have been distilled from the below 3.9 documentation links. 
 
