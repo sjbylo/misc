@@ -1,0 +1,5 @@
+export IP=52.221.38.230
+export SSH_USER=ec2-user 
+export MY_FQDN=ocp.paas.bylo.de
+export MY_DEV=/dev/xvdb  
+
