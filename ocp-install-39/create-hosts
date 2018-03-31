@@ -50,7 +50,7 @@ openshift_clusterid=cluster01   # Set this to the id of the cluster (need to tag
 #openshift_hosted_registry_enforcequota=true
 
 # dev and admin users
-openshift_master_htpasswd_users={'dev': '$apr1$PTuOXsIl$tb8wyZQY3S9XkQFL8Mvgz.', 'admin': '$apr1$PTuOXsIl$tb8wyZQY3S9XkQFL8Mvgz.'}
+openshift_master_htpasswd_users={'dev': '\$apr1\$PTuOXsIl\$tb8wyZQY3S9XkQFL8Mvgz.', 'admin': '\$apr1\$PTuOXsIl\$tb8wyZQY3S9XkQFL8Mvgz.'}
 
 osm_default_node_selector='env=dev'
 openshift_hosted_metrics_deploy=true
