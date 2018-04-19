@@ -23,9 +23,9 @@ http://v1.uncontained.io/playbooks/installation/
 1. RHEL 7.4 or 7.5
 1. At least 8 GB of RAM, better 16 GB or more
 1. 2 vCPU or more 
-1. Attach an extra 30+GB disk for docker storage, e.g. /dev/sdb
-1. One network interface only, with one static IP (which does not conflict with the following: 10.128.0.0/14 or 172.30.0.0/16)
-1. The VM must have internet access 
+1. Attach an extra 30GB or more disk for docker storage, e.g. /dev/sdb
+1. One network interface only, with one static IP (which does not conflict with the following address blocks: 10.128.0.0/14 or 172.30.0.0/16)
+1. The VM must have internet access to download the software
 1. A valid subscription of OpenShift, e.g. evaluation subs 
 1. Console or remote VM access
 
@@ -35,24 +35,23 @@ All the proper DNS entries must be configured.
 
 Note that setting hostnames in /etc/hosts *will not work*. DNS entries are required. 
 
-Select a domain name (FQDN) you control, e.g. openshift.example.com 
+Select a domain name (MY_DOMAIN) you control, e.g. openshift.example.com 
 
-The hostname of the VM must be set to "master.<FQDN>" e.g. master.openshift.example.com  
+The hostname of the VM must be set to "master.<MY_DOMAIN>" e.g. master.openshift.example.com  
 
+## Set up the following DNS entries, pointing to the IP address of the VM
 
-## Set up the following DNS entries 
-
-1. Wildcard entry:    *.apps.openshift.example.com              => $IP
-1. A record:          master.openshift.example.com              => $IP
+1. Wildcard entry:    *.apps.openshift.example.com 
+1. A record:          master.openshift.example.com
 
 Log into the VM with ssh 
 
-Set the hostname of the VM to master.$MY_FQDN 
+Set the hostname of the VM to master.<MY_DOMAIN>
 
-Ensure the hostname resolves to the IP address of your network interface, using the following command 
+Ensure the hostname resolves to the IP address of your network interface, using the following command
 
 ```
-host master.$MY_FQDN
+host master.openshift.example.com
 ```
 (value of $IP) 
 
@@ -71,8 +70,7 @@ Ensure these variable are set (change to suit your environment!)
 
 ```
 export IP=ip-address-of-the-interface 
-export SSH_USER=your-user
-export MY_FQDN=your-FQDN
+export MY_DOMAIN=your-DOMAIN
 export MY_DEV=your-device-path
 ```
 
@@ -80,17 +78,9 @@ export MY_DEV=your-device-path
 
 ```
 export IP=192.168.10.10
-export SSH_USER=ec2-user 
-export MY_FQDN=mydomain.com
+export MY_DOMAIN=mydomain.com
 export MY_DEV=/dev/sdb  
 ```
-
-Ensure ssh works inside the VM using the VM's hostname by setting up the ssh keys (see Appendix II for help) 
-
-```
-ssh $SSH_USER@`hostname` id 
-```
-(should show the output of the "id" command)
 
 ## Register the server with Red Hat 
 
@@ -210,14 +200,6 @@ systemctl  enable  NetworkManager
 
 **Please see 'Appendix I' below on how to set up the ansible inventory file.**
 
-### Check Ansible 
-
-Test ansible in an adhoc way to ensure all nodes can be reached via ssh in a passwordless way.
-
-```
-ansible OSEv3 -m ping
-```
-
 ### Install OpenShift by running ansible install playbook 
 
 ```
@@ -266,17 +248,16 @@ oadm policy add-cluster-role-to-user cluster-admin admin
 Open the following URL in your browser and log in as users 'dev' or 'admin'.
 
 ```
-https://master.$MY_FQDN/console/ 
+https://master.$MY_DOMAIN/console/ 
 ```
 
 
 # Appendix I 
 
-Ensure these 2 variables are set (instructions above).
+Ensure the MY_DOMAIN variable is set (instructions above).
 
 ```
-SSH_USER
-MY_FQDN
+MY_DOMAIN
 ```
 
 Run one of the following commands (curl or wget) to create the ansible inventory file. Check the content of the /etc/ansible/hosts file look like the below example. 
@@ -292,7 +273,7 @@ wget -q -O - https://raw.githubusercontent.com/sjbylo/misc/master/ocp-install-36
 ```
 
 Ensure the inventory file looks like the following.  Note, do not use the below but instead use the curl/bash command above.
-Both the username (\$SSH_USER) and the domain (\$MY_FQDN) have been substituted.
+The domain (\$MY_DOMAIN) has been substituted.
 
 ```
 [OSEv3:children]
@@ -305,7 +286,7 @@ nodes
 ansible_user=ec2-user
 # Uninstall playbook needed the following 
 #ansible_ssh_user=ec2-user
-ansible_become=true
+#ansible_become=true
 deployment_type=openshift-enterprise
 debug_level=4
 openshift_clock_enabled=true
@@ -348,24 +329,10 @@ master.example.com
 
 # host group for nodes, includes region info
 [nodes]
-master.example.com   openshift_public_hostname="master.example.com"  openshift_schedulable=true openshift_node_labels="{'name': 'master', 'region': 'infra', 'env': 'dev'}"
+master.example.com   openshift_public_hostname="master.example.com"  openshift_schedulable=true openshift_node_labels="{'name': 'master', 'region': 'infra', 'env': 'dev'}" ansible_connection=local 
 ```
 
 # Appendix II
-
-See: http://www.linuxproblem.org/art_9.html
-
-Copy your local private key to the VM 
-
-```
-scp ~/.ssh/id_rsa  $SSH_USER@$IP:.ssh/
-ssh $SSH_USER@$IP   # log into the VM
-sudo -i 
-cp /home/$SSH_USER/.ssh/id_rsa /root/.ssh/ && sudo chmod 600 /root/.ssh/id_rsa
-ssh $SSH_USER@`hostname` id   # should work without a password 
-```
-
-# Appendix III
 
 If there are 2 network interfaces  
 

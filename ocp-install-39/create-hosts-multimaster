@@ -34,8 +34,8 @@ openshift_master_htpasswd_users={'dev': '\$apr1\$PTuOXsIl\$tb8wyZQY3S9XkQFL8Mvgz
 # or to one or all of the masters defined in the inventory if no load
 # balancer is present.
 openshift_master_cluster_method=native
-openshift_master_cluster_hostname=master.int.$MY_FQDN      # E.g. master.int.ocp.example.com
-openshift_master_cluster_public_hostname=master.$MY_FQDN   # E.g. master.ocp.example.com
+openshift_master_cluster_hostname=master.int.$MY_DOMAIN      # E.g. master.int.ocp.example.com
+openshift_master_cluster_public_hostname=master.$MY_DOMAIN   # E.g. master.ocp.example.com
 
 #openshift_portal_net=172.30.0.0/16
 osm_cluster_network_cidr=10.128.0.0/16   # Default is /14
