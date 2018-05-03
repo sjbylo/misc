@@ -250,7 +250,7 @@ objects:
               - MYSQL_PWD="$MYSQL_PASSWORD" /opt/rh/rh-mysql57/root/usr/bin/mysql
                 -h 127.0.0.1 -u $MYSQL_USER -D $MYSQL_DATABASE -e 'SELECT 1'
             failureThreshold: 3
-            initialDelaySeconds: 3
+            initialDelaySeconds: 20
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 2
@@ -357,7 +357,7 @@ objects:
               path: /
               port: 8080
               scheme: HTTP
-            initialDelaySeconds: 3
+            initialDelaySeconds: 20
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 2

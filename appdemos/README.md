@@ -27,7 +27,9 @@ curl -s https://raw.githubusercontent.com/sjbylo/misc/master/appdemos/ab-load-te
 
 ## HPA demo
 
-Launch the hpa app demo template then then launch the ab-load-tester template.  Ensure the "ab" args are something like:
+You need an OpenShift cluster with metrics installed. 
+
+Launch the hpa app demo template then launch the ab-load-tester template.  Ensure the "ab" args are something like:
 
 e.g. -n 10000000 -c 20 http://frontend:8080/
 
@@ -37,3 +39,4 @@ e.g. -n 10000000 -c 20 http://frontend:8080/
 Note, it may take a while to pull the images on first run
 
 Ensure that metrics are configured and working 
+
