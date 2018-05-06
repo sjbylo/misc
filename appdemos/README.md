@@ -11,17 +11,17 @@ ab-load-tester will install ab which can apply load on the frontend
 Add the templates, e.g. 
 
 ```
-cat appdemo.template.yaml         | oc create -f - --as system:admin -n openshift
-cat hpa-appdemo.template.yaml     | oc create -f - --as system:admin -n openshift
-cat ab-load-tester.template.yaml  | oc create -f - --as system:admin -n openshift
+cat appdemo.template.yaml         | oc create -f - -n openshift --as system:admin 
+cat hpa-appdemo.template.yaml     | oc create -f - -n openshift --as system:admin 
+cat ab-load-tester.template.yaml  | oc create -f - -n openshift --as system:admin 
 ```
 
 or
 
 ```
-curl -s https://raw.githubusercontent.com/sjbylo/misc/master/appdemos/appdemo.template.yaml        | oc create -f - --as system:admin -n openshift
-curl -s https://raw.githubusercontent.com/sjbylo/misc/master/appdemos/hpa-appdemo.template.yaml    | oc create -f - --as system:admin -n openshift
-curl -s https://raw.githubusercontent.com/sjbylo/misc/master/appdemos/ab-load-tester.template.yaml | oc create -f - --as system:admin -n openshift
+curl -s https://raw.githubusercontent.com/sjbylo/misc/master/appdemos/appdemo.template.yaml        | oc create -f - -n openshift --as system:admin
+curl -s https://raw.githubusercontent.com/sjbylo/misc/master/appdemos/hpa-appdemo.template.yaml    | oc create -f - -n openshift --as system:admin
+curl -s https://raw.githubusercontent.com/sjbylo/misc/master/appdemos/ab-load-tester.template.yaml | oc create -f - -n openshift --as system:admin 
 
 ```
 
