@@ -25,6 +25,17 @@ curl -s https://raw.githubusercontent.com/sjbylo/misc/master/appdemos/ab-load-te
 
 ```
 
+## Need to fix the catalog
+
+```
+oc annotate template appdemo        tags=quickstart,ruby --overwrite -n openshift
+oc annotate template hpa-appdemo    tags=quickstart,ruby --overwrite -n openshift
+oc annotate template ab-load-tester tags=quickstart,ruby --overwrite -n openshift
+
+systemctl restart atomic-openshift-master-api.service
+systemctl restart atomic-openshift-master-controllers.service
+```
+
 ## HPA demo
 
 You need an OpenShift cluster with metrics installed. 
