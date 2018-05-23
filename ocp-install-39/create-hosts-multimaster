@@ -1,3 +1,5 @@
+[ ! "$MY_DOMAIN" ] && echo "Please define both varables first (SSH_USER and MY_DOMAIN)" >&2 && exit 1
+
 [ -f /etc/ansible/hosts ] && echo Backing up existing hosts file && cp -v /etc/ansible/hosts /tmp/hosts.`date +%Y%m%d-%H%M%S`
 
 cat > /etc/ansible/hosts <<END
@@ -11,6 +13,7 @@ nodes
 [OSEv3:vars]
 ansible_ssh_user=$SSH_USER
 ansible_become=true
+
 openshift_deployment_type=openshift-enterprise
 
 # Disable some pre-flight checks 
@@ -22,7 +25,7 @@ openshift_disable_check=memory_availability
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
 
 # apply updated node defaults
-openshift_node_kubelet_args={'pods-per-core': ['10'], 'max-pods': ['250'], 'image-gc-high-threshold': ['80'], 'image-gc-low-threshold': ['60']}
+openshift_node_kubelet_args={'pods-per-core': ['20'], 'max-pods': ['250'], 'image-gc-high-threshold': ['80'], 'image-gc-low-threshold': ['60']}
 
 # Set accounts to start with (dev/dev and admin/admin users)
 openshift_master_htpasswd_users={'dev': '\$apr1\$PTuOXsIl\$tb8wyZQY3S9XkQFL8Mvgz.', 'admin': '\$apr1\$PTuOXsIl\$tb8wyZQY3S9XkQFL8Mvgz.'}
@@ -49,29 +52,25 @@ openshift_clock_enabled=true
 #######################
 # AWS Config
 
-openshift_cloudprovider_kind=aws
+#openshift_cloudprovider_kind=aws
 #openshift_cloudprovider_aws_access_key="{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
 #openshift_cloudprovider_aws_secret_key="{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
 
 # If using S3 for the Docker registry, S3 bucket must already exist.
-# These vars are required 
 # https://docs.docker.com/registry/storage-drivers/s3/ 
 
-openshift_hosted_registry_storage_kind=object
-openshift_hosted_registry_storage_provider=s3
-openshift_hosted_registry_storage_s3_bucket=$MY_BUCKET
-openshift_hosted_registry_storage_s3_region=ap-southeast-1
-
-# These vars are optional
-
-openshift_hosted_registry_storage_s3_encrypt=false
+#openshift_hosted_registry_storage_kind=object
+#openshift_hosted_registry_storage_provider=s3
+#openshift_hosted_registry_storage_s3_bucket=$MY_BUCKET
+#openshift_hosted_registry_storage_s3_region=ap-southeast-1
+#openshift_hosted_registry_storage_s3_encrypt=false
 #openshift_hosted_registry_storage_s3_kmskeyid=aws_kms_key_id
 #openshift_hosted_registry_storage_s3_accesskey=aws_access_key_id
 #openshift_hosted_registry_storage_s3_secretkey=aws_secret_access_key
-openshift_hosted_registry_storage_s3_chunksize=26214400
-openshift_hosted_registry_storage_s3_rootdirectory=/registry
-openshift_hosted_registry_pullthrough=true
-openshift_hosted_registry_acceptschema2=true
+#openshift_hosted_registry_storage_s3_chunksize=26214400
+#openshift_hosted_registry_storage_s3_rootdirectory=/registry
+#openshift_hosted_registry_pullthrough=true
+#openshift_hosted_registry_acceptschema2=true
 #openshift_hosted_registry_enforcequota=true
 
 #######################
@@ -80,23 +79,17 @@ openshift_hosted_metrics_deploy=true
 #openshift_hosted_logging_deploy=true
 
 # default subdomain to use for exposed routes
-openshift_master_default_subdomain=apps.$MY_DOMAIN
+#openshift_master_default_subdomain=apps.$MY_DOMAIN
 
 # Set the port of the master (default is 8443) if the master is a dedicated host
 #openshift_master_api_port=443
 #openshift_master_console_port=443
 
-# default project node selector
-#osm_default_node_selector='env=dev'
-
 # Router selector (optional)
-# The openshift_router_selector and openshift_registry_selector determine the label selectors used when placing registry and router pods. They are set to region=infra by default.
-#openshift_hosted_router_selector='env=dev'
-openshift_hosted_router_replicas=3
+#openshift_hosted_router_replicas=3
 
 # Registry selector (optional)
-#openshift_registry_selector='env=dev'
-openshift_hosted_registry_replicas=3
+#openshift_hosted_registry_replicas=3
 
 # Configure metricsPublicURL in the master config for cluster metrics
 #openshift_master_metrics_public_url=https://hawkular-metrics.$MY_DOMAIN
