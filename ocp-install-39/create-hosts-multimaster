@@ -1,8 +1,42 @@
-[ ! "$MY_DOMAIN" ] && echo "Please define SSH_USER and MY_DOMAIN variable first, e.g. export SSH_USER=root" >&2 && exit 1
+#!/bin/bash 
+# Ways to run this script:
+# Define the variable (as below) and run the script unattended
+# Run the script without the variables defined for interactive 
 
-[ -f /etc/ansible/hosts ] && echo Backing up existing hosts file && cp -v /etc/ansible/hosts /tmp/hosts.`date +%Y%m%d-%H%M%S`
+OCP_RELEASE_DEFAULT=`curl -sk http://registry.access.redhat.com/v1/repositories/openshift3/ose/tags|python -m json.tool|tail -2 | head -1| cut -d\" -f2 | cut -d\. -f1,2`
 
-cat > hosts <<END
+[ -r ~/.ocp-ansible-hosts ] && source ~/.ocp-ansible-hosts && rm -f ~/.ocp-ansible-hosts
+
+[ ! "$OCP_RELEASE" ] && echo -n "OpenShift domain name? [default $OCP_RELEASE_DEFAULT] : " && read OCP_RELEASE
+[ ! "$OCP_RELEASE" ] && OCP_RELEASE=$OCP_RELEASE_DEFAULT
+echo OCP_RELEASE=$OCP_RELEASE >> ~/.ocp-ansible-hosts
+
+[ ! "$OCP_DOMAIN" ] && echo -n "OpenShift domain name? [default ocp.example.com] : " && read OCP_DOMAIN
+[ ! "$OCP_DOMAIN" ] && OCP_DOMAIN=ocp.example.com
+echo OCP_DOMAIN=$OCP_DOMAIN >> ~/.ocp-ansible-hosts
+
+[ ! "$OCP_SSH_USER" ] && echo -n "SSH user, e.g. root or ec2-user [root] : " && read OCP_SSH_USER
+[ ! "$OCP_SSH_USER" ] && OCP_SSH_USER=root
+echo OCP_SSH_USER=$OCP_SSH_USER >> ~/.ocp-ansible-hosts
+
+[ ! "$OCP_MASTER_COUNT" ] && echo -n "Number of masters? [default 1] : " && read OCP_MASTER_COUNT
+[ ! "$OCP_MASTER_COUNT" ] && OCP_MASTER_COUNT=1
+echo OCP_MASTER_COUNT=$OCP_MASTER_COUNT >> ~/.ocp-ansible-hosts
+
+[ ! "$OCP_INFRA_COUNT" ] && echo -n "Number of (dedicated) infra nodes? For all-in-one choose 0, e.g. 0 to 3 [default 1] : " && read OCP_INFRA_COUNT
+[ ! "$OCP_INFRA_COUNT" ] && OCP_INFRA_COUNT=1
+echo OCP_INFRA_COUNT=$OCP_INFRA_COUNT >> ~/.ocp-ansible-hosts
+[ $OCP_INFRA_COUNT -eq 0 ] && OCP_INFRA_ON_MASTER=1
+
+[ ! "$OCP_WORKER_COUNT" ] && echo -n "Number of worker nodes? For all-in-one choose 0 [default 2] : " && read OCP_WORKER_COUNT
+[ ! "$OCP_WORKER_COUNT" ] && OCP_WORKER_COUNT=2
+echo OCP_WORKER_COUNT=$OCP_WORKER_COUNT >> ~/.ocp-ansible-hosts
+
+[ $OCP_MASTER_COUNT -eq 1 -a $OCP_INFRA_COUNT -eq 0 -a $OCP_WORKER_COUNT -eq 0 ] && ALL_IN_ONE=1
+
+###[ -f ansible-hosts ] && echo -n Backing up existing ansible-hosts file && cp -v ansible-hosts ansible-hosts.`date +%Y%m%d-%H%M%S`
+
+cat > ansible-hosts <<END
 # Create an OSEv3 group that contains the master, nodes, etcd groups.
 [OSEv3:children]
 masters
@@ -11,14 +45,35 @@ nodes
 
 # Set variables common for all OSEv3 hosts
 [OSEv3:vars]
-ansible_ssh_user=$SSH_USER
-ansible_become=true
+END
+if [ "$ALL_IN_ONE" ]
+then
+	HASH_IT="#"
+	HASH_IT2="#"
+else
+	[ "$OCP_SSH_USER" = "root" ] && HASH_IT2="#"
+fi
+
+echo "${HASH_IT1}ansible_ssh_user=$OCP_SSH_USER" >> ansible-hosts
+echo "${HASH_IT2}ansible_become=true" >> ansible-hosts
+
+cat >> ansible-hosts <<END
 
 openshift_deployment_type=openshift-enterprise
+openshift_release=$OCP_RELEASE
+#debug_level=4
+
+# Docker Configuration
+# Add additional, insecure, and blocked registries to global docker configuration
+# For enterprise deployment types we ensure that registry.access.redhat.com is
+# included if you do not include it
+# Useful for disconnected installations
+#openshift_docker_additional_registries=registry.example.com
+#openshift_docker_insecure_registries=registry.example.com
+#openshift_docker_blocked_registries=registry.access.redhat.com,docker.io
 
 # Disable some pre-flight checks 
 #openshift_disable_check=memory_availability,disk_availability
-openshift_disable_check=memory_availability
 
 # Uncomment the following to enable htpasswd authentication; defaults to
 # DenyAllPasswordIdentityProvider.
@@ -27,7 +82,7 @@ openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 
 # apply updated node defaults
 openshift_node_kubelet_args={'pods-per-core': ['20'], 'max-pods': ['250'], 'image-gc-high-threshold': ['80'], 'image-gc-low-threshold': ['60']}
 
-# Set accounts to start with (dev/dev and admin/admin users)
+# Create some accounts to start with (dev/openshift3 and admin/openshift3 users)
 openshift_master_htpasswd_users={'dev': '\$apr1\$PTuOXsIl\$tb8wyZQY3S9XkQFL8Mvgz.', 'admin': '\$apr1\$PTuOXsIl\$tb8wyZQY3S9XkQFL8Mvgz.'}
 
 # Native high availbility cluster method with optional load balancer.
@@ -35,13 +90,21 @@ openshift_master_htpasswd_users={'dev': '\$apr1\$PTuOXsIl\$tb8wyZQY3S9XkQFL8Mvgz
 # been preconfigured. For installation the value of
 # openshift_master_cluster_hostname must resolve to the load balancer
 # or to one or all of the masters defined in the inventory if no load
-# balancer is present.
-openshift_master_cluster_method=native
-openshift_master_cluster_hostname=master.int.$MY_DOMAIN      # E.g. master.int.ocp.example.com
-openshift_master_cluster_public_hostname=master.$MY_DOMAIN   # E.g. master.ocp.example.com
+# balancer is present.   If you only have a single master, you don't need these "cluster" vars.
+END
 
+if [ "$OCP_MASTER_COUNT" -gt 1 ]
+then
+cat >> ansible-hosts <<END
+openshift_master_cluster_method=native
+openshift_master_cluster_hostname=master.int.$OCP_DOMAIN      # Name for internal API 
+openshift_master_cluster_public_hostname=master.$OCP_DOMAIN   # Name for Console/API 
+END
+fi
+
+cat >> ansible-hosts <<END
 #openshift_portal_net=172.30.0.0/16
-osm_cluster_network_cidr=10.128.0.0/16   # Default is /14
+#osm_cluster_network_cidr=10.128.0.0/16   # Default is /14
 
 # override the default controller lease ttl
 #osm_controller_lease_ttl=30
@@ -61,7 +124,7 @@ openshift_clock_enabled=true
 
 #openshift_hosted_registry_storage_kind=object
 #openshift_hosted_registry_storage_provider=s3
-#openshift_hosted_registry_storage_s3_bucket=$MY_BUCKET
+#openshift_hosted_registry_storage_s3_bucket=$OCP_BUCKET
 #openshift_hosted_registry_storage_s3_region=ap-southeast-1
 #openshift_hosted_registry_storage_s3_encrypt=false
 #openshift_hosted_registry_storage_s3_kmskeyid=aws_kms_key_id
@@ -79,41 +142,101 @@ openshift_hosted_metrics_deploy=true
 #openshift_hosted_logging_deploy=true
 
 # default subdomain to use for exposed routes
-#openshift_master_default_subdomain=apps.$MY_DOMAIN
+#openshift_master_default_subdomain=apps.$OCP_DOMAIN
 
+END
+
+if [ $OCP_INFRA_COUNT -ne 0 ]
+then
+cat >> ansible-hosts <<END
 # Set the port of the master (default is 8443) if the master is a dedicated host
-#openshift_master_api_port=443
-#openshift_master_console_port=443
+openshift_master_api_port=443
+openshift_master_console_port=443
+END
+fi
+
+cat >> ansible-hosts <<END
 
 # Router selector (optional)
-#openshift_hosted_router_replicas=3
+#openshift_hosted_router_replicas=${OCP_INFRA_ON_MASTER:$OCP_INFRA_COUNT}
 
 # Registry selector (optional)
-#openshift_hosted_registry_replicas=3
+#openshift_hosted_registry_replicas=${OCP_INFRA_ON_MASTER:$OCP_INFRA_COUNT}
 
 # Configure metricsPublicURL in the master config for cluster metrics
-#openshift_master_metrics_public_url=https://hawkular-metrics.$MY_DOMAIN
+#openshift_master_metrics_public_url=https://hawkular-metrics.$OCP_DOMAIN
 
 # Configure loggingPublicURL in the master config for aggregate logging
-#openshift_master_logging_public_url=https://kibana.$MY_DOMAIN
+#openshift_master_logging_public_url=https://kibana.$OCP_DOMAIN
 
 #######################
 
-# host group for masters
-[masters]
-master01.$MY_DOMAIN
-master02.$MY_DOMAIN
-master03.$MY_DOMAIN
+END
 
+cat >> ansible-hosts <<END
+# host groups
+[masters]
+END
+
+if [ "$ALL_IN_ONE" ]
+then
+	ADD_LABEL_TO_MASTER="openshift_node_labels={'region': 'infra', 'zone': 'default'}"
+	OPH=openshift_public_hostname=master.$MY_DOMAIN
+
+cat >> ansible-hosts <<END
+master.$OCP_DOMAIN
+
+[etcd]
+master.$OCP_DOMAIN 
+
+[nodes]
+master.$OCP_DOMAIN $OPH $ADD_LABEL_TO_MASTER openshift_schedulable=true ansible_connection=local
+END
+
+exit 0
+fi
+
+show_masters() 
+{
+	i=1
+	while [ $i -le $OCP_MASTER_COUNT ]
+	do
+		[ $OCP_INFRA_ON_MASTER ] && OST="openshift_schedulable=true openshift_node_labels={'region': 'infra', 'zone': 'default'}"
+		echo "master$i.$OCP_DOMAIN $OST" >> ansible-hosts
+		let i=$i+1
+	done
+}
+
+show_masters 
+
+echo >> ansible-hosts
+echo "[etcd]" >> ansible-hosts
+show_masters >> ansible-hosts
+echo >> ansible-hosts
+
+cat >> ansible-hosts <<END
 # host group for nodes, includes region info
 [nodes]
-master01.$MY_DOMAIN
-master02.$MY_DOMAIN
-master03.$MY_DOMAIN
-infra01.$MY_DOMAIN openshift_node_labels="{'region': 'infra', 'zone': 'default'}" 
-infra02.$MY_DOMAIN openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
-infra03.$MY_DOMAIN openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
-app01.$MY_DOMAIN  openshift_node_labels="{'region': 'primary', 'zone': 'east'}"  
-app02.$MY_DOMAIN  openshift_node_labels="{'region': 'primary', 'zone': 'west'}" 
 END
+
+show_masters >> ansible-hosts
+
+show_infra() 
+{
+	i=1
+	while [ $i -le $OCP_INFRA_COUNT ]
+	do
+		echo "infra$i.$OCP_DOMAIN openshift_node_labels={'region': 'infra', 'zone': 'default'}" 
+		let i=$i+1
+	done
+}
+
+show_infra >> ansible-hosts
+
+i=1
+while [ $i -le $OCP_WORKER_COUNT ]
+do
+	echo "node$i.$OCP_DOMAIN openshift_node_labels={'region': 'primary', 'zone': 'default'} $ac" >> ansible-hosts
+	let i=$i+1
+done
 
