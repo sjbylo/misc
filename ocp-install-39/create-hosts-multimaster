@@ -38,6 +38,8 @@ echo OCP_WORKER_COUNT=$OCP_WORKER_COUNT >> ~/.ocp-ansible-hosts
 
 cat > ansible-hosts <<END
 # Create an OSEv3 group that contains the master, nodes, etcd groups.
+# See here for more: https://github.com/openshift/openshift-ansible/tree/release-3.9/inventory
+
 [OSEv3:children]
 masters
 etcd
