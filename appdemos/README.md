@@ -1,14 +1,14 @@
 # App demo with hpa autoscaling 
 
-appdemo will install the ruby hello world app with the correct route and with health checks 
+The appdemo template will install the ruby hello world app with the correct route and with health checks. 
 
-hpa-appdemo will install appdemo but with hpa on the frontend
+hpa-appdemo will install appdemo but with hpa on the frontend.
 
-ab-load-tester will install ab which can apply load on the frontend
+ab-load-tester will install ab which can apply load on the frontend.
 
-## Set up
+## Adding the templates to OpenShift 
 
-Add the templates, e.g. 
+Add the templates as system:admin or as cluster-admin, e.g. 
 
 ```
 cat appdemo.template.yaml         | oc create -f - -n openshift --as system:admin 
@@ -25,13 +25,14 @@ curl -s https://raw.githubusercontent.com/sjbylo/misc/master/appdemos/ab-load-te
 
 ```
 
-## Set the templates to be visible in the catalog on 3.7 and above
+## Ensure the templates are visible in the catalog on 3.7 and above
 
 ```
 oc annotate template appdemo        tags=quickstart,ruby --overwrite -n openshift
 oc annotate template hpa-appdemo    tags=quickstart,ruby --overwrite -n openshift
 oc annotate template ab-load-tester tags=quickstart      --overwrite -n openshift
 
+# On the master(s)
 systemctl restart atomic-openshift-master-api.service
 systemctl restart atomic-openshift-master-controllers.service
 ```
@@ -41,6 +42,8 @@ systemctl restart atomic-openshift-master-controllers.service
 Either start the demo from the console by instantiating the appdemo template or run the following:
 
 ```
+oc login -u <normal-user>
+oc new-project demo
 oc new-app appdemo
 ```
 
