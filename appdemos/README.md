@@ -25,15 +25,23 @@ curl -s https://raw.githubusercontent.com/sjbylo/misc/master/appdemos/ab-load-te
 
 ```
 
-## Need to fix the catalog
+## Set the templates to be visible in the catalog on 3.7 and above
 
 ```
 oc annotate template appdemo        tags=quickstart,ruby --overwrite -n openshift
 oc annotate template hpa-appdemo    tags=quickstart,ruby --overwrite -n openshift
-oc annotate template ab-load-tester tags=quickstart,ruby --overwrite -n openshift
+oc annotate template ab-load-tester tags=quickstart      --overwrite -n openshift
 
 systemctl restart atomic-openshift-master-api.service
 systemctl restart atomic-openshift-master-controllers.service
+```
+
+## Start the demo
+
+Either start the demo from the console by instantiating the appdemo template or run the following:
+
+```
+oc new-app appdemo
 ```
 
 ## HPA demo
