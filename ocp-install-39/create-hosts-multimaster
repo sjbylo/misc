@@ -140,8 +140,8 @@ openshift_clock_enabled=true
 
 #######################
 
-openshift_hosted_metrics_deploy=true
-#openshift_hosted_logging_deploy=true
+openshift_metrics_install_metrics=true
+openshift_logging_install_logging=true
 
 # default subdomain to use for exposed routes
 #openshift_master_default_subdomain=apps.$OCP_DOMAIN
@@ -228,7 +228,7 @@ show_infra()
 	i=1
 	while [ $i -le $OCP_INFRA_COUNT ]
 	do
-		echo "infra$i.$OCP_DOMAIN openshift_node_labels={'region': 'infra', 'zone': 'default'}" 
+		echo "infra$i.$OCP_DOMAIN openshift_node_labels=\"{'region': 'infra', 'zone': 'default'}\"" 
 		let i=$i+1
 	done
 }
@@ -238,7 +238,7 @@ show_infra >> ansible-hosts
 i=1
 while [ $i -le $OCP_WORKER_COUNT ]
 do
-	echo "node$i.$OCP_DOMAIN openshift_node_labels={'region': 'primary', 'zone': 'default'} $ac" >> ansible-hosts
+	echo "node$i.$OCP_DOMAIN openshift_node_labels=\"{'region': 'primary', 'zone': 'default'}\" $ac" >> ansible-hosts
 	let i=$i+1
 done
 
