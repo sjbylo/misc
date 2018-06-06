@@ -141,10 +141,10 @@ openshift_clock_enabled=true
 #######################
 
 openshift_metrics_install_metrics=true
-openshift_logging_install_logging=true
+#openshift_logging_install_logging=true
 
 # default subdomain to use for exposed routes
-#openshift_master_default_subdomain=apps.$OCP_DOMAIN
+openshift_master_default_subdomain=apps.$OCP_DOMAIN
 
 END
 
@@ -171,21 +171,20 @@ cat >> ansible-hosts <<END
 # Configure loggingPublicURL in the master config for aggregate logging
 #openshift_master_logging_public_url=https://kibana.$OCP_DOMAIN
 
-#######################
-
-END
-
-cat >> ansible-hosts <<END
-# host groups
-[masters]
 END
 
 if [ "$ALL_IN_ONE" ]
 then
-	ADD_LABEL_TO_MASTER="openshift_node_labels={'region': 'infra', 'zone': 'default'}"
-	OPH=openshift_public_hostname=master.$MY_DOMAIN
+	ADD_LABEL_TO_MASTER="openshift_node_labels=\"{'region': 'infra', 'zone': 'default'}\""
+	OPH=openshift_public_hostname=master.$OCP_DOMAIN
 
 cat >> ansible-hosts <<END
+# default project node selector
+osm_default_node_selector='zone=default'
+
+#######################
+
+# host groups
 master.$OCP_DOMAIN
 
 [etcd]
@@ -197,6 +196,13 @@ END
 
 exit 0
 fi
+
+cat >> ansible-hosts <<END
+#######################
+
+# host groups
+[masters]
+END
 
 show_masters() 
 {
