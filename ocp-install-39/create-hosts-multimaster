@@ -13,6 +13,10 @@ OCP_RELEASE_DEFAULT=`curl -sk http://registry.access.redhat.com/v1/repositories/
 [ ! "$OCP_RELEASE" ] && OCP_RELEASE=$OCP_RELEASE_DEFAULT
 echo OCP_RELEASE=$OCP_RELEASE >> ~/.ocp-ansible-hosts
 
+[ ! "$OCP_AWS" ] && echo -n "OpenShift on AWS [default y] : " && read OCP_AWS
+[ ! "$OCP_AWS" ] && OCP_AWS=y
+echo OCP_AWS=$OCP_AWS >> ~/.ocp-ansible-hosts
+
 [ ! "$OCP_DOMAIN" ] && echo -n "OpenShift domain name? [default ocp.example.com] : " && read OCP_DOMAIN
 [ ! "$OCP_DOMAIN" ] && OCP_DOMAIN=ocp.example.com
 echo OCP_DOMAIN=$OCP_DOMAIN >> ~/.ocp-ansible-hosts
@@ -121,11 +125,16 @@ cat >> ansible-hosts <<END
 # enable ntp on masters to ensure proper failover
 openshift_clock_enabled=true
 
+END
+
+if [ "$OCP_AWS" = "y" ]
+then
+cat >> ansible-hosts <<END
 #######################
 # AWS Config. 
 
-#openshift_cloudprovider_kind=aws
-#openshift_clusterid=openshift
+openshift_cloudprovider_kind=aws
+openshift_clusterid=openshift
 #openshift_cloudprovider_aws_access_key="{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
 #openshift_cloudprovider_aws_secret_key="{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
 
@@ -147,7 +156,10 @@ openshift_clock_enabled=true
 #openshift_hosted_registry_enforcequota=true
 
 #######################
+END
+fi
 
+cat >> ansible-hosts <<END
 openshift_metrics_install_metrics=true
 #openshift_logging_install_logging=true
 
