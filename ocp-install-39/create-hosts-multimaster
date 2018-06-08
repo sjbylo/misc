@@ -3,6 +3,8 @@
 # Define the variable (as below) and run the script unattended
 # Run the script without the variables defined for interactive 
 
+[ "$1" ] && rm -f ~/.ocp-ansible-hosts
+
 OCP_RELEASE_DEFAULT=`curl -sk http://registry.access.redhat.com/v1/repositories/openshift3/ose/tags|python -m json.tool|tail -2 | head -1| cut -d\" -f2 | cut -d\. -f1,2`
 
 [ -r ~/.ocp-ansible-hosts ] && source ~/.ocp-ansible-hosts && rm -f ~/.ocp-ansible-hosts
@@ -63,6 +65,8 @@ cat >> ansible-hosts <<END
 
 openshift_deployment_type=openshift-enterprise
 openshift_release=$OCP_RELEASE
+
+# Debug level for all OpenShift components (Defaults to 2)
 #debug_level=4
 
 # Docker Configuration
@@ -73,6 +77,7 @@ openshift_release=$OCP_RELEASE
 #openshift_docker_additional_registries=registry.example.com
 #openshift_docker_insecure_registries=registry.example.com
 #openshift_docker_blocked_registries=registry.access.redhat.com,docker.io
+openshift_docker_options="--log-opt max-size=1M --log-opt max-file=3"
 
 # Disable some pre-flight checks 
 #openshift_disable_check=memory_availability,disk_availability
@@ -86,18 +91,20 @@ openshift_node_kubelet_args={'pods-per-core': ['20'], 'max-pods': ['250'], 'imag
 
 # Create some accounts to start with (dev/openshift3 and admin/openshift3 users)
 openshift_master_htpasswd_users={'dev': '\$apr1\$PTuOXsIl\$tb8wyZQY3S9XkQFL8Mvgz.', 'admin': '\$apr1\$PTuOXsIl\$tb8wyZQY3S9XkQFL8Mvgz.'}
+# Remember to run 'oadm policy add-cluster-role-to-user cluster-admin admin' after the installation.
 
+END
+
+if [ "$OCP_MASTER_COUNT" -gt 1 ]
+then
+cat >> ansible-hosts <<END
 # Native high availbility cluster method with optional load balancer.
 # If no lb group is defined installer assumes that a load balancer has
 # been preconfigured. For installation the value of
 # openshift_master_cluster_hostname must resolve to the load balancer
 # or to one or all of the masters defined in the inventory if no load
 # balancer is present.   If you only have a single master, you don't need these "cluster" vars.
-END
 
-if [ "$OCP_MASTER_COUNT" -gt 1 ]
-then
-cat >> ansible-hosts <<END
 openshift_master_cluster_method=native
 openshift_master_cluster_hostname=master.int.$OCP_DOMAIN      # Name for internal API 
 openshift_master_cluster_public_hostname=master.$OCP_DOMAIN   # Name for Console/API 
@@ -115,9 +122,10 @@ cat >> ansible-hosts <<END
 openshift_clock_enabled=true
 
 #######################
-# AWS Config
+# AWS Config. 
 
 #openshift_cloudprovider_kind=aws
+#openshift_clusterid=openshift
 #openshift_cloudprovider_aws_access_key="{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
 #openshift_cloudprovider_aws_secret_key="{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
 
@@ -147,15 +155,6 @@ openshift_metrics_install_metrics=true
 openshift_master_default_subdomain=apps.$OCP_DOMAIN
 
 END
-
-if [ $OCP_INFRA_COUNT -ne 0 ]
-then
-cat >> ansible-hosts <<END
-# Set the port of the master (default is 8443) if the master is a dedicated host
-openshift_master_api_port=443
-openshift_master_console_port=443
-END
-fi
 
 cat >> ansible-hosts <<END
 
@@ -195,6 +194,13 @@ master.$OCP_DOMAIN $OPH $ADD_LABEL_TO_MASTER openshift_schedulable=true ansible_
 END
 
 exit 0
+else
+cat >> ansible-hosts <<END
+# Set the port of the master (default is 8443) if the master is a dedicated host
+openshift_master_api_port=443
+openshift_master_console_port=443
+
+END
 fi
 
 cat >> ansible-hosts <<END
@@ -209,7 +215,7 @@ show_masters()
 	i=1
 	while [ $i -le $OCP_MASTER_COUNT ]
 	do
-		[ $OCP_INFRA_ON_MASTER ] && OST="openshift_schedulable=true openshift_node_labels={'region': 'infra', 'zone': 'default'}"
+		[ $OCP_INFRA_ON_MASTER ] && OST="openshift_schedulable=true openshift_node_labels=\"{'region': 'infra', 'zone': 'default'}\""
 		echo "master$i.$OCP_DOMAIN $OST" >> ansible-hosts
 		let i=$i+1
 	done

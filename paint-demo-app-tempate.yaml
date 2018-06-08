@@ -1,0 +1,223 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: xx.yaml
+objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: paint
+    name: paint
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      app: paint
+      deploymentconfig: paint
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Route
+  metadata:
+    annotations:
+      openshift.io/host.generated: "true"
+    creationTimestamp: null
+    labels:
+      app: paint
+    name: paint
+  spec:
+    host: paint-paint.apps.ocp.paas.bylo.de
+    port:
+      targetPort: 8080-tcp
+    to:
+      kind: Service
+      name: paint
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: 2017-06-28T05:28:41Z
+        status: "True"
+        type: Admitted
+      host: paint-paint.apps.ocp.paas.bylo.de
+      routerName: router
+      wildcardPolicy: None
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: paint
+    name: paint
+  spec:
+    replicas: 1
+    selector:
+      app: paint
+      deploymentconfig: paint
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: paint
+          deploymentconfig: paint
+      spec:
+        containers:
+        - image: 172.30.19.112:5000/paint/paint@sha256:471aa236a378cecdc2cb5b0f36919eec52dabcac9d59a2748c52fb80c5ee17a1
+          imagePullPolicy: IfNotPresent
+          name: paint
+          ports:
+          - containerPort: 8443
+            protocol: TCP
+          - containerPort: 8778
+            protocol: TCP
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - paint
+        from:
+          kind: ImageStreamTag
+          name: paint:latest
+          namespace: paint
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    latestVersion: 0
+    observedGeneration: 0
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: paint
+    name: paint
+  spec:
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: paint:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      contextDir: 07-vertx-paint
+      git:
+        uri: https://github.com/sjbylo/reactive_tutorial_jfokus17.git
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: openjdk18-openshift:latest
+        incremental: true
+      type: Source
+    triggers:
+    - github:
+        secret: SjVNbg4nz0pFVrUNVfIr
+      type: GitHub
+    - generic:
+        secret: r9A5mu0iEAMIKwDcpsT8
+      type: Generic
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/image.dockerRepositoryCheck: 2017-06-28T05:24:46Z
+    creationTimestamp: null
+    generation: 2
+    labels:
+      app: paint
+    name: openjdk18-openshift
+  spec:
+    tags:
+    - annotations:
+        openshift.io/imported-from: registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
+      from:
+        kind: DockerImage
+        name: 172.30.19.112:5000/paint/openjdk18-openshift:latest
+      generation: 2
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: Source
+  status:
+    dockerImageRepository: ""
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    generation: 1
+    labels:
+      app: paint
+    name: paint
+  spec:
+    tags:
+    - annotations: null
+      from:
+        kind: DockerImage
+        name: 172.30.19.112:5000/paint/paint:latest
+      generation: null
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: ""
+  status:
+    dockerImageRepository: ""
