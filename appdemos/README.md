@@ -33,8 +33,12 @@ oc annotate template hpa-appdemo    tags=quickstart,ruby --overwrite -n openshif
 oc annotate template ab-load-tester tags=quickstart      --overwrite -n openshift
 
 # On the master(s)
-systemctl restart atomic-openshift-master-api.service
-systemctl restart atomic-openshift-master-controllers.service
+sudo systemctl restart atomic-openshift-master-api.service
+sudo systemctl restart atomic-openshift-master-controllers.service
+
+or
+
+ansible masters -m shell -a "systemctl restart atomic-openshift-master-api atomic-openshift-master-controllers"
 ```
 
 ## Start the demo
