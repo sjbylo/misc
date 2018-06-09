@@ -97,6 +97,9 @@ openshift_node_kubelet_args={'pods-per-core': ['20'], 'max-pods': ['250'], 'imag
 openshift_master_htpasswd_users={'dev': '\$apr1\$PTuOXsIl\$tb8wyZQY3S9XkQFL8Mvgz.', 'admin': '\$apr1\$PTuOXsIl\$tb8wyZQY3S9XkQFL8Mvgz.'}
 # Remember to run 'oadm policy add-cluster-role-to-user cluster-admin admin' after the installation.
 
+# For bug: https://bugzilla.redhat.com/show_bug.cgi?id=1588435
+oreg_url=registry.access.redhat.com/openshift3/ose-${component}:${version}
+
 END
 
 if [ "$OCP_MASTER_COUNT" -gt 1 ]
