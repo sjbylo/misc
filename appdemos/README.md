@@ -59,6 +59,13 @@ Launch the hpa app demo template then launch the ab-load-tester template.  Ensur
 
 e.g. -n 10000000 -c 20 http://frontend:8080/
 
+## Demo with resource quota set 
+
+Use the quota definition to set the project quota.
+
+```
+oc create -f project-quota.yaml
+```
 
 ## Troubleshooting
 
