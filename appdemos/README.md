@@ -6,6 +6,10 @@ hpa-appdemo will install appdemo but with hpa on the frontend.
 
 ab-load-tester will install ab which can apply load on the frontend.
 
+## Source code
+
+https://github.com/sjbylo/ruby-hello-world.git 
+
 ## Adding the templates to OpenShift 
 
 Add the templates as system:admin or as cluster-admin, e.g. 
