@@ -6,6 +6,7 @@ metadata:
   resourceVersion: "804"
   description: "An example Ruby application with a MySQL database."
   tags: "quickstart,ruby,mysql"
+  iconClass: "icon-ruby"
 objects:
 - apiVersion: v1
   kind: Secret
