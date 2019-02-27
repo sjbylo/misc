@@ -5,9 +5,9 @@ metadata:
     description: |-
       An example Ruby application with a MySQL database.
     iconClass: icon-ruby
-    openshift.io/display-name: Ruby + MySQL 
+    openshift.io/display-name: Ruby + MySQL
     openshift.io/long-description: An example Ruby application with a MySQL database.
-    tags: quickstart,ruby,mysql
+    tags: quickstart,ruby,mysql,appdemo
     template.openshift.io/bindable: "false"
   name: appdemo
 objects:
