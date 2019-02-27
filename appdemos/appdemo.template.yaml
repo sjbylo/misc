@@ -1,9 +1,7 @@
 apiVersion: v1
 kind: Template
 metadata:
-  creationTimestamp: 2017-04-07T09:33:12Z
   name: appdemo
-  resourceVersion: "804"
   description: "An example Ruby application with a MySQL database."
   tags: "quickstart,ruby,mysql"
   iconClass: "icon-ruby"
