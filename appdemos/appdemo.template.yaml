@@ -1,10 +1,15 @@
 apiVersion: v1
 kind: Template
 metadata:
+  annotations:
+    description: |-
+      An example Ruby application with a MySQL database.
+    iconClass: icon-ruby
+    openshift.io/display-name: Ruby + MySQL 
+    openshift.io/long-description: An example Ruby application with a MySQL database.
+    tags: quickstart,ruby,mysql
+    template.openshift.io/bindable: "false"
   name: appdemo
-  description: "An example Ruby application with a MySQL database."
-  tags: "quickstart,ruby,mysql"
-  iconClass: "icon-ruby"
 objects:
 - apiVersion: v1
   kind: Secret
