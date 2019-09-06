@@ -24,6 +24,9 @@ objects:
     creationTimestamp: null
     generation: 1
     labels:
+      app.kubernetes.io/part-of: vote-app
+      app.kubernetes.io/name: python
+      app.openshift.io/runtime-version: '2.7'
       app: ruby-helloworld-sample
       template: application-template-stibuild
     name: origin-ruby-sample
@@ -46,6 +49,7 @@ objects:
     creationTimestamp: null
     generation: 2
     labels:
+      app.kubernetes.io/part-of: vote-app
       app: ruby-helloworld-sample
       template: application-template-stibuild
     name: ruby-22-centos7
@@ -66,6 +70,7 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
+      app.kubernetes.io/part-of: vote-app
       app: ruby-helloworld-sample
       name: ruby-sample-build
       template: application-template-stibuild
@@ -76,12 +81,12 @@ objects:
       to:
         kind: ImageStreamTag
         name: origin-ruby-sample:latest
-    postCommit:
-      args:
-      - bundle
-      - exec
-      - rake
-      - test
+#    postCommit:
+#      args:
+#      - bundle
+#      - exec
+#      - rake
+#      - test
     resources:
       requests:
         cpu: 50m
@@ -118,6 +123,7 @@ objects:
   metadata:
     creationTimestamp: null
     labels:
+      app.kubernetes.io/part-of: vote-app
       app: ruby-helloworld-sample
       template: application-template-stibuild
     name: database
@@ -140,6 +146,7 @@ objects:
       service.alpha.openshift.io/dependencies: '[{"name":"database","namespace":"","kind":"Service"}]'
     creationTimestamp: null
     labels:
+      app.kubernetes.io/part-of: vote-app
       app: ruby-helloworld-sample
       template: application-template-stibuild
     name: frontend
@@ -161,6 +168,7 @@ objects:
     creationTimestamp: null
     generation: 1
     labels:
+      app.kubernetes.io/part-of: vote-app
       app: ruby-helloworld-sample
       template: application-template-stibuild
     name: database
@@ -202,6 +210,7 @@ objects:
       metadata:
         creationTimestamp: null
         labels:
+          app.kubernetes.io/part-of: vote-app
           name: database
       spec:
         containers:
@@ -275,7 +284,10 @@ objects:
   metadata:
     creationTimestamp: null
     generation: 1
+    annotations: 
+      app.kubernetes.io/connects-to: '["database"]'
     labels:
+      app.kubernetes.io/part-of: vote-app
       app: ruby-helloworld-sample
       template: application-template-stibuild
     name: frontend
@@ -308,6 +320,7 @@ objects:
       metadata:
         creationTimestamp: null
         labels:
+          app.kubernetes.io/part-of: vote-app
           name: frontend
       spec:
         containers:
@@ -381,6 +394,7 @@ objects:
       openshift.io/host.generated: "true"
     creationTimestamp: null
     labels:
+      app.kubernetes.io/part-of: vote-app
       app: ruby-helloworld-sample
       template: application-template-stibuild
     name: frontend
