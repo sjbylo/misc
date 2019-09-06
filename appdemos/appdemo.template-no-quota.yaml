@@ -1,4 +1,4 @@
-apiVersion: template.openshift.io/v1
+apiVersion: v1
 kind: Template
 metadata:
   creationTimestamp: 2017-04-07T09:33:12Z
