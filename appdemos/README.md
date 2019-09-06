@@ -6,6 +6,10 @@ hpa-appdemo will install appdemo but with hpa on the frontend.
 
 ab-load-tester will install ab which can apply load on the frontend.
 
+## Source code
+
+https://github.com/sjbylo/ruby-hello-world.git 
+
 ## Adding the templates to OpenShift 
 
 Add the templates as system:admin or as cluster-admin, e.g. 
@@ -59,6 +63,13 @@ Launch the hpa app demo template then launch the ab-load-tester template.  Ensur
 
 e.g. -n 10000000 -c 20 http://frontend:8080/
 
+## Demo with resource quota set 
+
+Use the quota definition to set the project quota.
+
+```
+oc create -f project-quota.yaml
+```
 
 ## Troubleshooting
 

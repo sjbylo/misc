@@ -1,15 +1,9 @@
-apiVersion: template.openshift.io/v1
+apiVersion: v1
 kind: Template
 metadata:
-  annotations:
-    description: |-
-      An example Ruby application with a MySQL database.
-    iconClass: icon-ruby
-    openshift.io/display-name: Ruby + MySQL
-    openshift.io/long-description: An example Ruby application with a MySQL database.
-    tags: quickstart,ruby,mysql,appdemo
-    template.openshift.io/bindable: "false"
+  creationTimestamp: 2017-04-07T09:33:12Z
   name: appdemo
+  resourceVersion: "804"
 objects:
 - apiVersion: v1
   kind: Secret
@@ -82,10 +76,7 @@ objects:
       - exec
       - rake
       - test
-    resources:
-      requests:
-        cpu: 50m
-        memory: 100Mi
+    resources: {}
     runPolicy: Serial
     source:
       git:
@@ -192,11 +183,19 @@ objects:
             volumes:
             - ruby-helloworld-data
           failurePolicy: Ignore
+        pre:
+          execNewPod:
+            command:
+            - /bin/true
+            containerName: ruby-helloworld-database
+            env:
+            - name: CUSTOM_VAR1
+              value: custom_value1
+            volumes:
+            - ruby-helloworld-data
+          failurePolicy: Abort
         timeoutSeconds: 600
-      resources:
-        requests:
-          cpu: 50m
-          memory: 100Mi
+      resources: {}
       type: Recreate
     template:
       metadata:
@@ -248,10 +247,7 @@ objects:
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 2
-          resources:
-            requests:
-              cpu: 50m
-              memory: 100Mi
+          resources: {}
           securityContext:
             capabilities: {}
             privileged: false
@@ -284,10 +280,7 @@ objects:
     selector:
       name: frontend
     strategy:
-      resources:
-        requests:
-          cpu: 50m
-          memory: 100Mi
+      resources: {}
       rollingParams:
         intervalSeconds: 1
         maxSurge: 25%
@@ -301,6 +294,15 @@ objects:
             - name: CUSTOM_VAR2
               value: custom_value2
           failurePolicy: Ignore
+        pre:
+          execNewPod:
+            command:
+            - /bin/true
+            containerName: ruby-helloworld
+            env:
+            - name: CUSTOM_VAR1
+              value: custom_value1
+          failurePolicy: Abort
         timeoutSeconds: 120
         updatePeriodSeconds: 1
       type: Rolling
@@ -353,7 +355,6 @@ objects:
           resources:
             requests:
               cpu: 50m
-              memory: 100Mi
           securityContext:
             capabilities: {}
             privileged: false
