@@ -285,7 +285,7 @@ objects:
     creationTimestamp: null
     generation: 1
     annotations: 
-      app.kubernetes.io/connects-to: '["database"]'
+      app.openshift.io/connects-to: '["database"]'
     labels:
       app.kubernetes.io/part-of: vote-app
       app: ruby-helloworld-sample
