@@ -25,6 +25,7 @@ objects:
     generation: 1
     labels:
       app.kubernetes.io/part-of: vote-app
+      app.kubernetes.io/instance: ruby-helloworld-sample
       app.kubernetes.io/name: python
       app.openshift.io/runtime-version: '2.7'
       app: ruby-helloworld-sample
@@ -50,6 +51,7 @@ objects:
     generation: 2
     labels:
       app.kubernetes.io/part-of: vote-app
+      app.kubernetes.io/instance: ruby-helloworld-sample
       app: ruby-helloworld-sample
       template: application-template-stibuild
     name: ruby-22-centos7
@@ -71,6 +73,7 @@ objects:
     creationTimestamp: null
     labels:
       app.kubernetes.io/part-of: vote-app
+      app.kubernetes.io/instance: ruby-helloworld-sample
       app: ruby-helloworld-sample
       name: ruby-sample-build
       template: application-template-stibuild
@@ -124,6 +127,7 @@ objects:
     creationTimestamp: null
     labels:
       app.kubernetes.io/part-of: vote-app
+      app.kubernetes.io/instance: ruby-helloworld-sample
       app: ruby-helloworld-sample
       template: application-template-stibuild
     name: database
@@ -147,6 +151,7 @@ objects:
     creationTimestamp: null
     labels:
       app.kubernetes.io/part-of: vote-app
+      app.kubernetes.io/instance: ruby-helloworld-sample
       app: ruby-helloworld-sample
       template: application-template-stibuild
     name: frontend
@@ -169,6 +174,7 @@ objects:
     generation: 1
     labels:
       app.kubernetes.io/part-of: vote-app
+      app.kubernetes.io/instance: ruby-helloworld-sample
       app: ruby-helloworld-sample
       template: application-template-stibuild
     name: database
@@ -288,6 +294,7 @@ objects:
       app.openshift.io/connects-to: '["database"]'
     labels:
       app.kubernetes.io/part-of: vote-app
+      app.kubernetes.io/instance: ruby-helloworld-sample
       app: ruby-helloworld-sample
       template: application-template-stibuild
     name: frontend
@@ -395,6 +402,7 @@ objects:
     creationTimestamp: null
     labels:
       app.kubernetes.io/part-of: vote-app
+      app.kubernetes.io/instance: ruby-helloworld-sample
       app: ruby-helloworld-sample
       template: application-template-stibuild
     name: frontend
