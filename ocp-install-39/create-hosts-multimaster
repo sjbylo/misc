@@ -5,9 +5,11 @@
 
 [ "$1" ] && rm -f ~/.ocp-ansible-hosts
 
-OCP_RELEASE_DEFAULT=`curl -sk http://registry.access.redhat.com/v1/repositories/openshift3/ose/tags|python -m json.tool|tail -2 | head -1| cut -d\" -f2 | cut -d\. -f1,2`
+OCP_RELEASE_DEFAULT=v`curl -sk http://registry.access.redhat.com/v1/repositories/openshift3/ose/tags|python -m json.tool| grep \"v | cut -d\" -f2| sed "s/^v//g" | cut -d\. -f1,2| sort -n -t\. -k 2 | tail -1`
 
 [ -r ~/.ocp-ansible-hosts ] && source ~/.ocp-ansible-hosts && rm -f ~/.ocp-ansible-hosts
+
+OCP_INFRA_ON_MASTER=
 
 [ ! "$OCP_RELEASE" ] && echo -n "OpenShift domain name? [default $OCP_RELEASE_DEFAULT] : " && read OCP_RELEASE
 [ ! "$OCP_RELEASE" ] && OCP_RELEASE=$OCP_RELEASE_DEFAULT
@@ -98,7 +100,7 @@ openshift_master_htpasswd_users={'dev': '\$apr1\$PTuOXsIl\$tb8wyZQY3S9XkQFL8Mvgz
 # Remember to run 'oadm policy add-cluster-role-to-user cluster-admin admin' after the installation.
 
 # For bug: https://bugzilla.redhat.com/show_bug.cgi?id=1588435
-oreg_url=registry.access.redhat.com/openshift3/ose-${component}:${version}
+oreg_url=registry.access.redhat.com/openshift3/ose-\${component}:\${version}
 
 END
 
