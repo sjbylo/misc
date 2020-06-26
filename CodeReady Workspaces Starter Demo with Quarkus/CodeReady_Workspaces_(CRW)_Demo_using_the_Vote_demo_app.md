@@ -68,7 +68,7 @@ Refresh the browser showing the running app to see the change instantly (no need
 
 ![c8242c81c9e7a732818a1b353637e9c5.png](image/c8242c81c9e7a732818a1b353637e9c5.png)
 
-**Other example demo using a Vote App "factory URL"  **
+**Other example demo using a Vote App "factory URL"**
 
 Open the URL [https://che.openshift.io/f?url=https://github.com/sjbylo/flask-vote-app](https://che.openshift.io/f?url=https://github.com/sjbylo/flask-vote-app) to open the workspace with just one click! 
 
