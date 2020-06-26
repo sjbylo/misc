@@ -64,13 +64,13 @@ Go to the GreetingResource.java file and update the code.  Note, there is no ne
 
 ![8a7d52a9008f75d56f647ec24a03eb3d.png](image/8a7d52a9008f75d56f647ec24a03eb3d.png)
 
-Refresh the browser showing the running app to see the change instantly (no need to re-comopile the quarkus app): 
+Refresh the browser showing the running app to see the change instantly (no need to re-compile the quarkus app): 
 
 ![c8242c81c9e7a732818a1b353637e9c5.png](image/c8242c81c9e7a732818a1b353637e9c5.png)
 
 **Other example demo using a Vote App "Factory URL"**
 
-Open the URL [https://che.openshift.io/f?url=https://github.com/sjbylo/flask-vote-app](https://che.openshift.io/f?url=https://github.com/sjbylo/flask-vote-app) to open the workspace with just one click! (be sure to close the existing workspace as one one can be open at any time in che.openshift.io). 
+Open the URL [https://che.openshift.io/f?url=https://github.com/sjbylo/flask-vote-app](https://che.openshift.io/f?url=https://github.com/sjbylo/flask-vote-app) to open the workspace with just one click! (be sure to close the existing workspace as only one can be open at any time in che.openshift.io). 
 
 This is really useful to quickly show an application to another team member, e.g. from a developer to a tester.  
 
@@ -78,11 +78,7 @@ This is really useful to quickly show an application to another team member, e.g
 
 The application workspace will be created and the app can be executed in a similar way to the above Quarkus app: 
 
-**
-
 ![210a6f5dd41d7357cfca2edf8e66a08c.png](image/210a6f5dd41d7357cfca2edf8e66a08c.png)
-
-**
 
 Other features that can be shown include:
 
