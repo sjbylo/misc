@@ -1,4 +1,4 @@
-# CodeReady Workspaces (CRW) Demo using the Vote demo app
+# CodeReady Workspaces (CRW) Starter Demo with Quarkus
 
 This demo is a quick way to show off Eclipse Che or CRW on OpenShift. 
 
@@ -68,11 +68,13 @@ Refresh the browser showing the running app to see the change instantly (no need
 
 ![c8242c81c9e7a732818a1b353637e9c5.png](image/c8242c81c9e7a732818a1b353637e9c5.png)
 
-**Other example demo using a Vote App "factory URL"**
+**Other example demo using a Vote App "Factory URL"**
 
-Open the URL [https://che.openshift.io/f?url=https://github.com/sjbylo/flask-vote-app](https://che.openshift.io/f?url=https://github.com/sjbylo/flask-vote-app) to open the workspace with just one click! 
+Open the URL [https://che.openshift.io/f?url=https://github.com/sjbylo/flask-vote-app](https://che.openshift.io/f?url=https://github.com/sjbylo/flask-vote-app) to open the workspace with just one click! (be sure to close the existing workspace as one one can be open at any time in che.openshift.io). 
 
 This is really useful to quickly show an application to another team member, e.g. from a developer to a tester.  
+
+![dd095768c87d036615a8275e35787095.png](image/dd095768c87d036615a8275e35787095.png)
 
 The application workspace will be created and the app can be executed in a similar way to the above Quarkus app: 
 
@@ -82,9 +84,19 @@ The application workspace will be created and the app can be executed in a simil
 
 **
 
+Other features that can be shown include:
+
+1. The ease of use of the modern editor, including short cuts and code completion.
+
+2. The search feature
+
+3. Source control feature with git
+
+![225ae6c5fad7f7af9f99bf18a9e091ac.png](image/225ae6c5fad7f7af9f99bf18a9e091ac.png)
+
 ---
 
-**Miscellaneous **
+**Miscellaneous**
 
 If you want to demo CRW on your own OpenShift cluster or on an RHPDS cluster
 
@@ -98,7 +110,9 @@ Quick start:
 
 ---
 
-**Other useful content:**
+**Other useful content**
+
+(note, some are internal access only)
 
 1. [https://github.com/sjbylo/flask-vote-app](https://github.com/sjbylo/flask-vote-app) - the demo app
 
@@ -106,16 +120,18 @@ Quick start:
 
 3. CRW Arch. [slide](https://docs.google.com/presentation/d/1WFRi9MZD3qksnEuAvgZpNrCjEf1PFLDMyxr-L2xThQA/edit#slide=id.g64798e8100_1_452)
 
-4. CRW all in [One slide](https://docs.google.com/presentation/d/1Zklf--RjGchYD6qJDcVR7BT_s-mGTaRTsxBJvVTuYEM/edit#slide=id.g6beb2c4044_0_235) - CRW [OneStop](https://redhat.highspot.com/items/5c7fd4a981171734ea321621#1)
+4. CRW all in [One slide](https://docs.google.com/presentation/d/1Zklf--RjGchYD6qJDcVR7BT_s-mGTaRTsxBJvVTuYEM/edit#slide=id.g6beb2c4044_0_235)
 
-5. CRW [FAQ](https://docs.google.com/document/d/174USXEPCzTxz-piEk0CaOMzr2R1KhU7-1P7TEG0bBMc/edit#)
+5. CRW [OneStop](https://redhat.highspot.com/items/5c7fd4a981171734ea321621#1)
 
-6. [videos](https://www.youtube.com/playlist?list=PLf3vm0UK6HKpBA8nWWO--6HtzKm6trH7-) (Veer M)
+6. CRW [FAQ](https://docs.google.com/document/d/174USXEPCzTxz-piEk0CaOMzr2R1KhU7-1P7TEG0bBMc/edit#)
 
-7. [end-user doc](https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces/2.0/html-single/end-user_guide/index)[doc2.1](https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces/2.1/html/installation_guide/index) (May 2020)
+7. [videos](https://www.youtube.com/playlist?list=PLf3vm0UK6HKpBA8nWWO--6HtzKm6trH7-) (by Veer Muchandi)
 
-8. Main "Red Hat CodeReady Workspaces" [deck](https://docs.google.com/presentation/d/17EYvjLTE45B-nN__diBxnZCkKAMCKiaLWz6O5BO7vbw/edit#slide=id.g64798e8100_1_0)
+8. [End-user doc](https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces/2.0/html-single/end-user_guide/index)
 
-9. It's not always easy to find up-to-date documentation on Eclipse Che.  This is one good source for the latest features:
+9. [doc2.1](https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces/2.1/html/installation_guide/index) (May 2020)
 
-1. [https://www.eclipse.org/che/docs/che-7/introduction-to-eclipse-che/](https://www.eclipse.org/che/docs/che-7/introduction-to-eclipse-che/)
+10. Main "Red Hat CodeReady Workspaces" [deck](https://docs.google.com/presentation/d/17EYvjLTE45B-nN__diBxnZCkKAMCKiaLWz6O5BO7vbw/edit#slide=id.g64798e8100_1_0)
+
+11. It's not always easy to find up-to-date [documentation on Eclipse Che](https://www.eclipse.org/che/docs/che-7/introduction-to-eclipse-che/).  This is one good source for the latest features.
