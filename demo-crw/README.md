@@ -8,7 +8,7 @@ Before you demo CRW, view this video and note the required messaging for the cus
 
 * [Video presentation by Brad Micklea](https://my.allego.com/play.do?contentId=659233&sch=20921) - for CRW messaging
 
-If you are in a hurry, you can demo without having to install CRW at all.   Go here: [https://che.openshift.io/dashboard/#/](https://che.openshift.io/dashboard/#/) - log in with your RH access login (or RH developer login).
+If you are in a hurry, you can demo without having to install CRW at all.   Go here: [https://che.openshift.io/](https://che.openshift.io/dashboard/#/) - log in with your RH access login (or RH developer login).
 
 You will see your Workspaces, if you have any:
 
