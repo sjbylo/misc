@@ -1,16 +1,16 @@
 # CodeReady Workspaces (CRW) Starter Demo with Quarkus
 
-This demo is a quick way to show off Eclipse Che or CRW on OpenShift. 
+This demo is a quick way to show off Eclipse Che or CRW.
 
 The first part shows a demo with a Quarkus app and the second part shows how to use a factory url to open a workspace with one click.
 
-Before you demo CRW, look through this video and note the required messaging for the customer! 
+Before you demo CRW, view this video and note the required messaging for the customer! 
 
-* [Video preso](https://my.allego.com/play.do?contentId=659233&sch=20921) - for CRW messaging
+* [Video presentation by Brad Micklea](https://my.allego.com/play.do?contentId=659233&sch=20921) - for CRW messaging
 
 If you are in a hurry, you can demo without having to install CRW at all.   Go here: [https://che.openshift.io/dashboard/#/](https://che.openshift.io/dashboard/#/) - log in with your RH access login (or RH developer login).
 
-You will see your Workspaces, if any:
+You will see your Workspaces, if you have any:
 
 ![d587de200a110a79b11406ed58784e03.png](image/d587de200a110a79b11406ed58784e03.png)
 
@@ -18,7 +18,7 @@ Click on "Get Started".   You will see some example workspaces. 
 
 ![3be3c28def6da9864b27c4ddc1a165a8.png](image/3be3c28def6da9864b27c4ddc1a165a8.png)
 
-Filter by "Quarkus" and choose the "Quarkus Tools"sample  to create a workspace.  
+Filter by "Quarkus" and choose the "Quarkus Tools" sample to create a workspace.  
 
 * It's a good idea to do this in advance of the demo because it can take about 2-3 mins to come up properly.  If there are any problems opening this workspace, I suggest opening it in advance on a separate tab as a backup!
 
@@ -44,7 +44,7 @@ Click on "Start Development Mode" to start the app for testing:
 
 ![d04b50ba69c3a8433b0b54dedaed966b.png](image/d04b50ba69c3a8433b0b54dedaed966b.png)
 
-The app will launch in dev mode:
+The app will launch in dev mode which means that any changes made to the code will automatically and immediately reflect in the running app:
 
 ![146345aa57347cd4237592079942d73a.png](image/146345aa57347cd4237592079942d73a.png)
 
@@ -82,7 +82,7 @@ The application workspace will be created and the app can be executed in a simil
 
 Other features that can be shown include:
 
-1. The ease of use of the modern editor, including short cuts and code completion.
+1. The ease of use of the modern editor, including short cuts and code completion
 
 2. The search feature
 
@@ -102,7 +102,7 @@ Quick start:
 
 2. Create a new project, e.g. "demo" and Install the "Che cluster" into the project.
 
-3. On the OCP "CodeReady Workspaces Cluster Overview" page click on the route - wait for Status: available
+3. On the OCP "CodeReady Workspaces Cluster Overview" page click on the route - wait for Status: available.
 
 ---
 
@@ -116,7 +116,7 @@ Quick start:
 
 3. CRW Arch. [slide](https://docs.google.com/presentation/d/1WFRi9MZD3qksnEuAvgZpNrCjEf1PFLDMyxr-L2xThQA/edit#slide=id.g64798e8100_1_452)
 
-4. CRW all in [One slide](https://docs.google.com/presentation/d/1Zklf--RjGchYD6qJDcVR7BT_s-mGTaRTsxBJvVTuYEM/edit#slide=id.g6beb2c4044_0_235)
+4. CRW all in [One slide](https://docs.google.com/presentation/d/1Zklf--RjGchYD6qJDcVR7BT_s-mGTaRTsxBJvVTuYEM/edit#slide=id.g6beb2c4044_0_235)
 
 5. CRW [OneStop](https://redhat.highspot.com/items/5c7fd4a981171734ea321621#1)
 
@@ -131,3 +131,4 @@ Quick start:
 10. Main "Red Hat CodeReady Workspaces" [deck](https://docs.google.com/presentation/d/17EYvjLTE45B-nN__diBxnZCkKAMCKiaLWz6O5BO7vbw/edit#slide=id.g64798e8100_1_0)
 
 11. It's not always easy to find up-to-date [documentation on Eclipse Che](https://www.eclipse.org/che/docs/che-7/introduction-to-eclipse-che/).  This is one good source for the latest features.
+
